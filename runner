@@ -1,1 +1,25 @@
 Hello evrybd
+
+
+~~~~ notes
+
+Classes:
+
+-movement
+-character
+-bg grid
+-kb handler
+-color grid
+-collisions
+-game
+-main
+
+
+Basic features:
+
+-collisions
+-opponents moving left
+-single input: jump
+-gravity pulls main piece down
+
+
