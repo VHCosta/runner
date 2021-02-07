@@ -1,16 +1,10 @@
 package org.academiadecodigo.cachealots.runner.blocks;
 
-public enum BlockType {
+public enum BlockType{
 
-    BLOCK(4),
-    DOUBLE_BLOCK(3),
-    FAT_BLOCK(2);
+    SINGLE_BLOCK,
+    DOUBLE_BLOCK,
+    FAT_BLOCK;
 
-
-    private int speed;
-
-    BlockType(int speed){
-            this.speed = speed;
-    }
 
 }
