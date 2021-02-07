@@ -3,7 +3,7 @@ package org.academiadecodigo.cachealots.runner.blocks;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-
+/*
 public class BlockFactory {
 
     // Manufactures new random Block
@@ -35,3 +35,4 @@ public class BlockFactory {
 
     //new Rectangle((grid.getWidth() - 1), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
 }
+*/

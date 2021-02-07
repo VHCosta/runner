@@ -4,7 +4,7 @@ public class GameExecutable {
 
     public static void main(String[] args) {
 
-        Game runner = new Game(20, 12);
+        Game runner = new Game(22, 12);
 
         try {
             runner.start();

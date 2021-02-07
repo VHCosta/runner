@@ -1,6 +1,7 @@
 package org.academiadecodigo.cachealots.runner;
 
 import org.academiadecodigo.cachealots.runner.grid.Grid;
+import org.academiadecodigo.cachealots.runner.grid.Movement;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
@@ -8,14 +9,18 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class RunnerKeyboardHandler implements KeyboardHandler {
 
-    private Rectangle rectangle;
     private Picture picture;
     private Grid grid;
+    private Movement movement;
+    private Game game;
 
 
-    public RunnerKeyboardHandler(Rectangle rectangle, Grid grid){
-        this.rectangle = rectangle;
+
+
+    public RunnerKeyboardHandler(Grid grid, Game game){
         this.grid = grid;
+        this.game = game;
+
     }
 
     public RunnerKeyboardHandler(Picture picture, Grid grid){
@@ -23,26 +28,30 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
         this.grid = grid;
     }
 
+    public void setMovement(Movement movement) {
+        this.movement = movement;
+    }
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_RIGHT:
-                rectangle.translate(grid.CELL_SIZE/4,0);
+                movement.moveRight(grid.CELL_SIZE/4);
                 break;
             case KeyboardEvent.KEY_LEFT:
-                rectangle.translate(-grid.CELL_SIZE/4,0);
+                movement.moveLeft(grid.CELL_SIZE/4);
                 break;
             case KeyboardEvent.KEY_UP:
-                rectangle.translate(0,-grid.CELL_SIZE/4);
+                movement.moveUp(grid.CELL_SIZE/4);
                 break;
             case KeyboardEvent.KEY_DOWN:
-                rectangle.translate(0,grid.CELL_SIZE/4);
+                movement.moveDown(grid.CELL_SIZE/4);
                 break;
             case KeyboardEvent.KEY_SPACE:
-                rectangle.translate(0,-grid.CELL_SIZE/4);
+                System.out.println("space");
+                game.jump(true);
+                System.out.println(game.jumping);
                 break;
-
 
         }
     }
