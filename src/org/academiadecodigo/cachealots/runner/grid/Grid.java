@@ -2,6 +2,7 @@ package org.academiadecodigo.cachealots.runner.grid;
 
 import org.academiadecodigo.cachealots.runner.blocks.Block;
 import org.academiadecodigo.cachealots.runner.blocks.BlockFactory;
+import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -12,7 +13,7 @@ public class Grid {
 
     //-- Constants
 
-    private final int PADDING = 10;
+    public final int PADDING = 10;
     public final int CELL_SIZE = 30;
 
 
@@ -21,6 +22,7 @@ public class Grid {
     private int cols;
     private int rows;
     private Rectangle rectangle;
+
     Picture backGround;
 
 
@@ -35,6 +37,7 @@ public class Grid {
 
         backGround = new Picture(PADDING, PADDING, "resources/backGround.png");
         rectangle = new Rectangle(PADDING, PADDING, backGround.getWidth(), backGround.getHeight());
+
     }
 
 
@@ -45,6 +48,7 @@ public class Grid {
         //rectangle.setColor(Color.CYAN);
         backGround.draw();
         rectangle.draw();
+
 
         //outline.setColor(Color.DARK_GRAY);
         //outline.draw();

@@ -28,16 +28,19 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
     public void keyPressed(KeyboardEvent keyboardEvent) {
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_RIGHT:
-                rectangle.translate(grid.CELL_SIZE,0);
+                rectangle.translate(grid.CELL_SIZE/4,0);
                 break;
             case KeyboardEvent.KEY_LEFT:
-                rectangle.translate(-grid.CELL_SIZE,0);
+                rectangle.translate(-grid.CELL_SIZE/4,0);
                 break;
             case KeyboardEvent.KEY_UP:
-                rectangle.translate(0,-grid.CELL_SIZE);
+                rectangle.translate(0,-grid.CELL_SIZE/4);
                 break;
             case KeyboardEvent.KEY_DOWN:
-                rectangle.translate(0,grid.CELL_SIZE);
+                rectangle.translate(0,grid.CELL_SIZE/4);
+                break;
+            case KeyboardEvent.KEY_SPACE:
+                rectangle.translate(0,-grid.CELL_SIZE/4);
                 break;
 
 
