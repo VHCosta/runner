@@ -24,8 +24,7 @@ public class Movement {
         this.keyboard = keyboard;
         this.handler = handler;
 
-        characterRectangle = new Rectangle((3 * grid.getCellSize()) + grid.getPadding(),
-                (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
+        characterRectangle = new Rectangle((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
         characterRectangle.setColor(Color.BLUE);
 
     }

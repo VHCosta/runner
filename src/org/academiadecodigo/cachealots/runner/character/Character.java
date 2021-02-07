@@ -40,5 +40,7 @@ public class Character {
         this.pos = pos;
     }
 
-
+    public Picture getSprite() {
+        return sprite;
+    }
 }

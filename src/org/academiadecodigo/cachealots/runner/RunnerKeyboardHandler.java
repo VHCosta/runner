@@ -40,7 +40,7 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
                 rectangle.translate(0,grid.CELL_SIZE/4);
                 break;
             case KeyboardEvent.KEY_SPACE:
-                rectangle.translate(0,-grid.CELL_SIZE/4);
+                ;
                 break;
 
 

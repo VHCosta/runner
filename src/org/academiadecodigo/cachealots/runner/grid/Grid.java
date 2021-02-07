@@ -1,8 +1,6 @@
 package org.academiadecodigo.cachealots.runner.grid;
 
 import org.academiadecodigo.cachealots.runner.blocks.Block;
-import org.academiadecodigo.cachealots.runner.blocks.BlockFactory;
-import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
