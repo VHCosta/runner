@@ -5,7 +5,11 @@ import org.academiadecodigo.cachealots.runner.grid.Position;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 
+<<<<<<< HEAD
 public class Block {  // class with the characteristics of the running blocks
+=======
+/*public class Block{  // class with the characteristics of the running blocks
+>>>>>>> 2665c62da268107f038f65dc69a9a4ba6fa3a584
 
     private Rectangle obstacle;
     private Position pos;
@@ -31,4 +35,4 @@ public class Block {  // class with the characteristics of the running blocks
 
 
 
-}//end of Block class
+}//end of Block class*/
