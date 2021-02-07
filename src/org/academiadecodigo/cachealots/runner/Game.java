@@ -52,7 +52,8 @@ public class Game {
         keyboard.addEventListener(KeyboardEvent.KEY_LEFT,KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(KeyboardEvent.KEY_UP,KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(KeyboardEvent.KEY_DOWN,KeyboardEventType.KEY_PRESSED);
-
+        keyboard.addEventListener(KeyboardEvent.KEY_SPACE,KeyboardEventType.KEY_PRESSED);
+        Boolean jump;
     }
 
 
