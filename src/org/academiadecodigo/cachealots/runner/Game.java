@@ -1,9 +1,11 @@
 package org.academiadecodigo.cachealots.runner;
 
+import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
-import org.academiadecodigo.simplegraphics.pictures.Picture;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
+import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 
 public class Game {
 
@@ -41,14 +43,23 @@ public class Game {
         //floorShape.setColor(Color.DARK_GRAY);
 
 
-        handler = new RunnerKeyboardHandler(characterShape);
+        handler = new RunnerKeyboardHandler(characterShape, grid);
         keyboard = new Keyboard(handler);
+    }
+    public void movement(){
+
+        keyboard.addEventListener(KeyboardEvent.KEY_RIGHT, KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(KeyboardEvent.KEY_LEFT,KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(KeyboardEvent.KEY_UP,KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(KeyboardEvent.KEY_DOWN,KeyboardEventType.KEY_PRESSED);
+
     }
 
 
     public void start(){
         grid.init();
         characterShape.fill();
+        movement();
         //floorShape.draw();
 
     }
