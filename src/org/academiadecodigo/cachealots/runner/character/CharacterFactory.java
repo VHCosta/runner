@@ -10,7 +10,8 @@ public class CharacterFactory {
         int random = (int) (Math.random() * BlockType.values().length);
         CharacterType characterType = CharacterType.values()[random];
 
-        return new Character(characterType);
+//        return new Character(characterType);
+        return null;
     }
 
 

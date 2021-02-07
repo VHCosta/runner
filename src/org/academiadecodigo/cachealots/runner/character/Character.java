@@ -1,6 +1,7 @@
 package org.academiadecodigo.cachealots.runner.character;
 
 import org.academiadecodigo.cachealots.runner.blocks.BlockType;
+import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Position;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -12,13 +13,15 @@ public class Character {
     private Picture sprite;
     private Position pos;
     private CharacterType characterType;
+    private Grid grid;
 
-    public Character(CharacterType characterType){
+    public Character(CharacterType characterType, Grid grid){
         pos = new Position();
 
+        this.grid = grid;
         this.characterType = characterType;
 
-        this.sprite = new Picture(pos.getCol(), pos.getRow(), characterType.getSource());
+        this.sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), characterType.getSource());
     }
 
     public Position getPos() {

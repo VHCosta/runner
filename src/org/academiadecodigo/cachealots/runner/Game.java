@@ -1,5 +1,7 @@
 package org.academiadecodigo.cachealots.runner;
 
+import org.academiadecodigo.cachealots.runner.character.Character;
+import org.academiadecodigo.cachealots.runner.character.CharacterType;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Movement;
 import org.academiadecodigo.simplegraphics.graphics.Color;
@@ -22,7 +24,7 @@ public class Game {
 
     private Rectangle floorShape;
 
-
+    private Character character;
     //will replace rectangle:
     //private Picture characterSprite;
 
@@ -31,15 +33,20 @@ public class Game {
     // [] background (Grid class?)
     // [] char sprites
 
-
     public Game(int cols, int rows) {
         grid = new Grid(cols, rows);
-        characterShape = new Rectangle((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
-        characterShape.setColor(Color.BLUE);
+
+        //characterShape = new Rectangle((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
+        //characterShape.setColor(Color.BLUE);
+
+        character = new Character(CharacterType.ALEX, grid);
+
         rectangleHide = new Rectangle(0,0,grid.PADDING, grid.getHeight()+ grid.PADDING);
         rectangleHide.setColor(Color.WHITE);
+
         handler = new RunnerKeyboardHandler(characterShape, grid);
         keyboard = new Keyboard(handler);
+
         move = new Movement(keyboard, handler, grid);
 
         //TODO: replace with call to BlockFactory.createBlock();
@@ -53,7 +60,7 @@ public class Game {
 
     public void start(){
         grid.init();
-        characterShape.fill();
+        character.draw();
         rectangleHide.fill();
         move.simpleMovement();
 
