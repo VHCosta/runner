@@ -6,6 +6,9 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
+import org.w3c.dom.html.HTMLImageElement;
+
+import java.sql.Time;
 
 
 public class Game {
@@ -19,7 +22,8 @@ public class Game {
     private Movement move;
     private Rectangle floorShape;
     protected boolean jumping;
-
+    public int time = (int) System.currentTimeMillis();
+    public int meter = grid.CELL_SIZE;
 
     //will replace rectangle:
     //private Picture characterSprite;
@@ -40,6 +44,7 @@ public class Game {
         handler.setMovement(move);
 
 
+
         //TODO: replace with call to BlockFactory.createBlock();
 
         //floorShape = new Rectangle(grid.getPadding(), (grid.getHeight() - (2 * grid.getCellSize())) + grid.getY(), grid.getWidth(), (1 * grid.getCellSize()) - grid.getPadding());
@@ -56,6 +61,10 @@ public class Game {
             keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
             added = true;
         }
+    }
+    public void gravityJump(){
+        final int GRAVITY = 10;
+        grid.CELL_SIZE * GRAVITY * Time * Time /2;
     }
 
     public void start() throws InterruptedException {
