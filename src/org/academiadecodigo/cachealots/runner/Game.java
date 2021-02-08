@@ -28,8 +28,8 @@ public class Game {
     private Movement move;
     private Rectangle floorShape;
     protected boolean jumping;
-    public int time = (int) System.currentTimeMillis();
-    public int meter = grid.CELL_SIZE;
+  //  public int time = (int) System.currentTimeMillis();
+//    public int meter = grid.CELL_SIZE;
 
     //will replace rectangle:
     //private Picture characterSprite;
@@ -68,10 +68,10 @@ public class Game {
             added = true;
         }
     }
-    public void gravityJump(){
-        final int GRAVITY = 10;
-        grid.CELL_SIZE * GRAVITY * Time * Time /2;
-    }
+   // public void gravityJump(){
+     //   final int GRAVITY = 10;
+       // grid.CELL_SIZE * GRAVITY * Time * Time /2;
+    //}
 
     public void start() throws InterruptedException {
         grid.init();
@@ -83,12 +83,63 @@ public class Game {
         while(true){ //while game is not over
             //checkListener();
             while(jumping){
-                move.moveUp(3* grid.CELL_SIZE);
+                move.moveUp( grid.CELL_SIZE/3);
                 System.out.println("up");
-                Thread.sleep(200);
-                move.moveDown(3*grid.CELL_SIZE);
+                Thread.sleep(20);
+                move.moveUp( grid.CELL_SIZE/3);
+                System.out.println("up");
+                Thread.sleep(20);
+                move.moveUp( grid.CELL_SIZE/3);
+                System.out.println("up");
+                Thread.sleep(20);
+                move.moveUp( grid.CELL_SIZE/3);
+                System.out.println("up");
+                Thread.sleep(20);
+                move.moveUp( grid.CELL_SIZE/3);
+                System.out.println("up");
+                Thread.sleep(20);
+                move.moveUp( grid.CELL_SIZE/3);
+                System.out.println("up");
+                Thread.sleep(20);
+                move.moveUp( grid.CELL_SIZE/3);
+                System.out.println("up");
+                Thread.sleep(20);
+                move.moveUp( grid.CELL_SIZE/3);
+                System.out.println("up");
+                Thread.sleep(20);
+                move.moveUp( grid.CELL_SIZE/3);
+                System.out.println("up");
+                Thread.sleep(20);
+
+                move.moveDown(grid.CELL_SIZE/3);
                 System.out.println("down");
+                Thread.sleep(20);
+                move.moveDown(grid.CELL_SIZE/3);
+                System.out.println("down");
+                Thread.sleep(20);
+                move.moveDown(grid.CELL_SIZE/3);
+                System.out.println("down");
+                Thread.sleep(20);
+                move.moveDown(grid.CELL_SIZE/3);
+                System.out.println("down");
+                Thread.sleep(20);
+                move.moveDown(grid.CELL_SIZE/3);
+                System.out.println("down");
+                Thread.sleep(20);
+                move.moveDown(grid.CELL_SIZE/3);
+                System.out.println("down");
+                Thread.sleep(20);
+                move.moveDown(grid.CELL_SIZE/3);
+                System.out.println("down");
+                Thread.sleep(20);
+                move.moveDown(grid.CELL_SIZE/3);
+                System.out.println("down");
+                Thread.sleep(20);
+                move.moveDown(grid.CELL_SIZE/3);
+                System.out.println("down");
+                Thread.sleep(20);
                 jumping = false;
+
 
             }
         Thread.sleep(20);
