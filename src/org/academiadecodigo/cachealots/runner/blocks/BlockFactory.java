@@ -34,7 +34,6 @@ public class BlockFactory {
         }
 
         return block;
-        */
     }
 
     //new Rectangle((grid.getWidth() - 1), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());

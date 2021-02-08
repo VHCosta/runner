@@ -1,5 +1,4 @@
 package org.academiadecodigo.cachealots.runner;
-import org.academiadecodigo.cachealots.runner.blocks.BlockFactory;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Movement;
 import org.academiadecodigo.simplegraphics.graphics.Color;
@@ -7,15 +6,6 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
-<<<<<<< HEAD
-
-import java.util.BitSet;
-=======
-import org.w3c.dom.html.HTMLImageElement;
-
-import java.sql.Time;
-
->>>>>>> 5bc3a5ac77475a6621dcc1320e62f5f6542f84a4
 
 public class Game {
 
@@ -28,14 +18,6 @@ public class Game {
     private Movement move;
     private Rectangle floorShape;
     protected boolean jumping;
-  //  public int time = (int) System.currentTimeMillis();
-//    public int meter = grid.CELL_SIZE;
-
-    //will replace rectangle:
-    //private Picture characterSprite;
-    //TODO: get temp gfx for:
-    // [] background (Grid class?)
-    // [] char sprites
 
     public Game(int cols, int rows) {
 
@@ -51,10 +33,6 @@ public class Game {
 
 
 
-        //TODO: replace with call to BlockFactory.createBlock();
-
-        //floorShape = new Rectangle(grid.getPadding(), (grid.getHeight() - (2 * grid.getCellSize())) + grid.getY(), grid.getWidth(), (1 * grid.getCellSize()) - grid.getPadding());
-        //floorShape.setColor(Color.DARK_GRAY);
     }
 
     public void jump(boolean j) {
