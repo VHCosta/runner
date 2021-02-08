@@ -1,6 +1,7 @@
 package org.academiadecodigo.cachealots.runner.blocks;
 
 import org.academiadecodigo.cachealots.runner.grid.Grid;
+import org.academiadecodigo.cachealots.runner.grid.Position;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
@@ -11,7 +12,9 @@ public class BlockFactory {
 
     public static Block getNewBlock(Grid grid) {
 
-        int random = (int) (Math.random() * BlockType.values().length);
+        Block block = new Block(new Position());
+        return block;
+        /*int random = (int) (Math.random() * BlockType.values().length);
         BlockType blockType = BlockType.values()[random];
 
         Block block;
@@ -31,6 +34,7 @@ public class BlockFactory {
         }
 
         return block;
+        */
     }
 
     //new Rectangle((grid.getWidth() - 1), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());

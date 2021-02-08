@@ -6,11 +6,7 @@ public class GameExecutable {
 
         Game runner = new Game(20, 12);
 
-        try {
-            runner.start();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        runner.start();
 
     }//end of main()
 

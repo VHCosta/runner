@@ -9,12 +9,20 @@ public class Block extends Rectangle{  // class with the characteristics of the 
 
     private Rectangle obstacle;
     private Position pos;
+    private Grid grid;
+    private int col = grid.CELL_SIZE;
+    private int row = grid.CELL_SIZE;
     //private BlockType type;
 
-    public Block(Grid grid, int col, int row){
-        this.pos = pos;
+    public Block(Position pos){
+
         this.grid = grid;
-        Rectangle obstacle  = new Rectangle(grid.getWidth() - 1), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize();
+        int size = col + row;
+
+        int obstacleCol = col - size + grid.getPadding();
+        int obstacleRow = row + grid.getPadding();
+
+        obstacle  = new Rectangle(obstacleCol, obstacleRow, size, size);
 
 
         //this.type = type;

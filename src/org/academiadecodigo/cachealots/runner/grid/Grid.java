@@ -52,14 +52,14 @@ public class Grid {
         //outline.draw();
     }
 
-
+/*
     //TODO: have specific methods to create characterBlock, cloudBlock, obstacleBlock
     public Block makeBlock(){
 
         //TODO: replace with call to BlockFactory.createBlock()
         return BlockFactory.getNewBlock();
     }
-
+*/
 
 
 

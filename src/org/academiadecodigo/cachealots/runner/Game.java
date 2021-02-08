@@ -1,4 +1,5 @@
 package org.academiadecodigo.cachealots.runner;
+import org.academiadecodigo.cachealots.runner.blocks.BlockFactory;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Movement;
 import org.academiadecodigo.simplegraphics.graphics.Color;
@@ -6,6 +7,9 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
+
+import java.util.BitSet;
+
 public class Game {
     private Grid grid;
     private Keyboard keyboard;
@@ -38,6 +42,7 @@ public class Game {
         characterShape.fill();
         rectangleHide.fill();
         move.simpleMovement();
+
         //floorShape.draw();
     }
 }//end of Game class
