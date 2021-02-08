@@ -8,6 +8,7 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.w3c.dom.html.HTMLImageElement;
 
+import java.awt.geom.AffineTransform;
 import java.sql.Time;
 
 
@@ -50,9 +51,10 @@ public class Game {
         //floorShape = new Rectangle(grid.getPadding(), (grid.getHeight() - (2 * grid.getCellSize())) + grid.getY(), grid.getWidth(), (1 * grid.getCellSize()) - grid.getPadding());
         //floorShape.setColor(Color.DARK_GRAY);
     }
-
     public void jump(boolean j) {
-        this.jumping = j;
+        if(characterShape.getY()==245) {
+            this.jumping = j;
+        }
     }
 
     public boolean added;
@@ -72,71 +74,52 @@ public class Game {
         characterShape.fill();
         rectangleHide.fill();
         move.simpleMovement();
+        int timesGoingUpAndDown=0;
+        boolean rtf=false;
         //floorShape.draw();
         while(true){ //while game is not over
             //checkListener();
+            double speed=0;
+
+            double g=9.8;
+            double d=0;
+            double maxTime=0.00536;
+            double maxHight=100;
+            double jumpUpInitialSpeed=0.186567;
+            double t0= System.currentTimeMillis();
             while(jumping){
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                jumping = false;
-
-
+                while(rtf==false) {
+                    int initialJumpY=characterShape.getY();
+                    speed=-(jumpUpInitialSpeed+(-g*System.currentTimeMillis()-t0));
+                    move.moveUp(speed);
+                    if(characterShape.getY()-speed>=characterShape.getY()-100){
+                        //tM=2*jumpUpInitialSpeed*Math.sin(90)/g;
+                        System.out.println(System.currentTimeMillis()-t0);
+                        System.out.println(speed);
+                        move.moveUp(speed);
+                        Thread.sleep(20);
+                        if(characterShape.getY()-speed<=initialJumpY-100){
+                            move.moveUp(characterShape.getY()-(initialJumpY-100));
+                            rtf = true;
+                            Thread.sleep(2);
+                        }
+                    }
+                }
+                while(rtf==true) {
+                    double t=System.currentTimeMillis()-t0;
+                    d = (10*Math.pow(t/1000,2))/2;
+                    move.moveDown(d);
+                    Thread.sleep(2);
+                    if(characterShape.getY()+d>=245) {
+                        move.moveDown(245-characterShape.getY());
+                        Thread.sleep(2);
+                        rtf=false;
+                        jumping = false;
+                        break;
+                    }
+                }
             }
         Thread.sleep(20);
         }
-
     }
 }

@@ -52,12 +52,12 @@ public class Movement {
 
     // TODO: 07/02/2021 implement general movement method
     // TODO: 07/02/2021 these should change direction state, instead of moving rectangle
-    public void moveUp(int distance){
+    public void moveUp(double distance){
         //this.direction = UP;
         characterRectangle.translate(0, -distance);
     }
 
-    public void moveDown(int distance){
+    public void moveDown(double distance){
         characterRectangle.translate(0, distance);
     }
 
