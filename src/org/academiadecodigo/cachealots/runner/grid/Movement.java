@@ -29,19 +29,21 @@ public class Movement {
         System.out.println("after going down");
     }
 
+    public Movement(Keyboard keyboard, RunnerKeyboardHandler handler, Grid grid, Character character) {
+
+        this.grid = grid;
+        this.keyboard = keyboard;
+        this.handler = handler;
+        this.character = character;
+
+    }
 
     public Movement(Keyboard keyboard, RunnerKeyboardHandler handler, Grid grid, Rectangle characterRectangle) {
 
         this.grid = grid;
         this.keyboard = keyboard;
         this.handler = handler;
-
-<<<<<<< HEAD
-        characterRectangle = new Rectangle((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
-        characterRectangle.setColor(Color.BLUE);
-=======
         this.characterRectangle = characterRectangle;
->>>>>>> 2665c62da268107f038f65dc69a9a4ba6fa3a584
 
     }
 
@@ -59,18 +61,18 @@ public class Movement {
     // TODO: 07/02/2021 these should change direction state, instead of moving rectangle
     public void moveUp(int distance){
         //this.direction = UP;
-        characterRectangle.translate(0, -distance);
+        character.getSprite().translate(0, -distance);
     }
 
     public void moveDown(int distance){
-        characterRectangle.translate(0, distance);
+        character.getSprite().translate(0, distance);
     }
 
     public void moveRight(int distance){
-        characterRectangle.translate(distance, 0);
+        character.getSprite().translate(distance, 0);
     }
 
     public void moveLeft(int distance){
-        characterRectangle.translate(-distance, 0);
+        character.getSprite().translate(-distance, 0);
     }
 }

@@ -48,13 +48,7 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
                 movement.moveDown(grid.CELL_SIZE/4);
                 break;
             case KeyboardEvent.KEY_SPACE:
-<<<<<<< HEAD
-                ;
-=======
-                System.out.println("space");
                 game.jump(true);
-                System.out.println(game.jumping);
->>>>>>> 2665c62da268107f038f65dc69a9a4ba6fa3a584
                 break;
 
         }
