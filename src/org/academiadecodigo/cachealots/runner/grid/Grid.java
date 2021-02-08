@@ -1,6 +1,5 @@
 package org.academiadecodigo.cachealots.runner.grid;
 
-import org.academiadecodigo.cachealots.runner.blocks.Block;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -54,7 +53,7 @@ public class Grid {
 
 /*
     //TODO: have specific methods to create characterBlock, cloudBlock, obstacleBlock
-    public Block makeBlock(){
+    /*public Block makeBlock(){
 
         //TODO: replace with call to BlockFactory.createBlock()
         return BlockFactory.getNewBlock();
