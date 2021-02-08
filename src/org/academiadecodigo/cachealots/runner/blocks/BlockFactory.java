@@ -4,7 +4,7 @@ import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Position;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-/*
+
 public class BlockFactory {
 
     // Manufactures new random Block
@@ -12,7 +12,9 @@ public class BlockFactory {
 
     public static Block getNewBlock(Grid grid) {
 
-        Block block = new Block(new Position());
+        Block block = new Block(grid);
+
+
         return block;
         /*int random = (int) (Math.random() * BlockType.values().length);
         BlockType blockType = BlockType.values()[random];
@@ -33,10 +35,8 @@ public class BlockFactory {
                 block = new SingleBlock();
         }
 
-        return block;
-        */
-    }
+        return block; */
 
-    //new Rectangle((grid.getWidth() - 1), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
+
+    }
 }
-*/
