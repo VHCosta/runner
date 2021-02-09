@@ -10,19 +10,31 @@ import org.w3c.dom.html.HTMLImageElement;
 
 import java.sql.Time;
 
+import static java.lang.Thread.sleep;
+
 
 public class Game {
 
     private Grid grid;
     private Keyboard keyboard;
     private RunnerKeyboardHandler handler;
-    //temporary shape as placeholder
     private Rectangle characterShape;
-    private Rectangle rectangleHide;
+    private Rectangle rectangleHideLeft;
+    private Rectangle rectangleHideRight;
     private Movement move;
-    private Rectangle floorShape;
+
+    private Rectangle testAttacker1;
+    private Rectangle testAttacker2;
+    private Rectangle testAttacker3;
+    private Rectangle testAttacker4;
+
     protected boolean jumping;
-  //  public int time = (int) System.currentTimeMillis();
+
+    private Thread Thread1;
+    private Thread Thread2;
+
+
+    //  public int time = (int) System.currentTimeMillis();
 //    public int meter = grid.CELL_SIZE;
 
     //will replace rectangle:
@@ -36,8 +48,23 @@ public class Game {
         grid = new Grid(cols, rows);
         characterShape = new Rectangle((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
         characterShape.setColor(Color.BLUE);
-        rectangleHide = new Rectangle(0,0,grid.PADDING, grid.getHeight()+ grid.PADDING);
-        rectangleHide.setColor(Color.WHITE);
+        rectangleHideLeft = new Rectangle(0,0,grid.PADDING, grid.getHeight()+ grid.PADDING);
+        rectangleHideLeft.setColor(Color.WHITE);
+        rectangleHideRight = new Rectangle(grid.getWidth()+ grid.PADDING,0,grid.PADDING*5, grid.getHeight());
+        rectangleHideRight.setColor(Color.WHITE);
+
+        testAttacker1 = new Rectangle((grid.getWidth() - grid.getCellSize()) + grid.getPadding()*5, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
+        testAttacker1.setColor(Color.BLACK);
+
+        testAttacker2 = new Rectangle((grid.getWidth() - grid.getCellSize()) + grid.getPadding()*5, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
+        testAttacker2.setColor(Color.GRAY);
+
+        testAttacker3 = new Rectangle((grid.getWidth() - grid.getCellSize()) + grid.getPadding()*5, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
+        testAttacker3.setColor(Color.YELLOW);
+
+        testAttacker4 = new Rectangle((grid.getWidth() - grid.getCellSize()) + grid.getPadding()*5, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
+        testAttacker4.setColor(Color.PINK);
+
         handler = new RunnerKeyboardHandler(grid, this);
         keyboard = new Keyboard(handler);
         move = new Movement(keyboard, handler, grid, characterShape);
@@ -62,80 +89,85 @@ public class Game {
             added = true;
         }
     }
-   // public void gravityJump(){
-     //   final int GRAVITY = 10;
-       // grid.CELL_SIZE * GRAVITY * Time * Time /2;
-    //}
+
+
+    final Thread thread1 = new Thread() {
+        public void run() {
+            for (int i = 0; i <= 380; i++) {
+                testAttacker1.translate(-grid.CELL_SIZE/8, 0);
+                try {
+                    sleep(15);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            for (int i = 0; i <= 380; i++) {
+                testAttacker2.translate(-grid.CELL_SIZE/8, 0);
+                try {
+                    sleep(13);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            for (int i = 0; i <= 380; i++) {
+                testAttacker3.translate(-grid.CELL_SIZE/8, 0);
+                try {
+                    sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            for (int i = 0; i <= 380; i++) {
+                testAttacker4.translate(-grid.CELL_SIZE/8, 0);
+                try {
+                    sleep(3);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    };
 
     public void start() throws InterruptedException {
+
         grid.init();
         characterShape.fill();
-        rectangleHide.fill();
+
+
+        testAttacker1.fill();
+        testAttacker2.fill();
+        testAttacker3.fill();
+        testAttacker4.fill();
+        thread1.start();
+
+
+        rectangleHideLeft.fill();
+        rectangleHideRight.fill();
+
+
         move.simpleMovement();
         //floorShape.draw();
         while(true){ //while game is not over
             //checkListener();
             while(jumping){
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
-                move.moveUp( grid.CELL_SIZE/3);
-                System.out.println("up");
-                Thread.sleep(20);
 
-                move.moveDown(grid.CELL_SIZE/3);
+                for(int i = 0; i<17; i++){
+                    move.moveUp(grid.CELL_SIZE/7);
+                    sleep(20);
+                }
+                System.out.println("Up");
+
+                for(int i = 0; i<17; i++) {
+                    move.moveDown(grid.CELL_SIZE/7);
+                    sleep(20);
+                }
                 System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
-                move.moveDown(grid.CELL_SIZE/3);
-                System.out.println("down");
-                Thread.sleep(20);
                 jumping = false;
 
-
             }
-        Thread.sleep(20);
+        sleep(20);
         }
 
     }
