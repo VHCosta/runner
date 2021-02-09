@@ -31,7 +31,6 @@ public class Grid {
         this.cols = cols;
         this.rows = rows;
 
-
         backGround = new Picture(PADDING, PADDING, "resources/backGround.png");
         rectangle = new Rectangle(PADDING, PADDING, backGround.getWidth(), backGround.getHeight());
 
@@ -52,13 +51,6 @@ public class Grid {
     }
 
 
-    //TODO: have specific methods to create characterBlock, cloudBlock, obstacleBlock
-    /*public Block makeBlock(){
-
-        //TODO: replace with call to BlockFactory.createBlock()
-        return BlockFactory.getNewBlock();
-    }
-*/
 
 
 

@@ -1,5 +1,6 @@
 package org.academiadecodigo.cachealots.runner;
 
+import org.academiadecodigo.cachealots.runner.character.Character;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Movement;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
@@ -9,23 +10,14 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class RunnerKeyboardHandler implements KeyboardHandler {
 
-    private Picture picture;
     private Grid grid;
     private Movement movement;
-    private Game game;
+    private Character character;
 
 
-
-
-    public RunnerKeyboardHandler(Grid grid, Game game){
+    public RunnerKeyboardHandler(Grid grid, Character character){
         this.grid = grid;
-        this.game = game;
-
-    }
-
-    public RunnerKeyboardHandler(Picture picture, Grid grid){
-        this.picture = picture;
-        this.grid = grid;
+        this.character = character;
     }
 
     public void setMovement(Movement movement) {
@@ -35,22 +27,13 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
         switch (keyboardEvent.getKey()) {
-            case KeyboardEvent.KEY_RIGHT:
-                movement.moveRight(grid.CELL_SIZE/4);
-                break;
-            case KeyboardEvent.KEY_LEFT:
-                movement.moveLeft(grid.CELL_SIZE/4);
-                break;
-            case KeyboardEvent.KEY_UP:
-                movement.moveUp(grid.CELL_SIZE/4);
-                break;
-            case KeyboardEvent.KEY_DOWN:
-                movement.moveDown(grid.CELL_SIZE/4);
-                break;
-            case KeyboardEvent.KEY_SPACE:
-                game.jump(true);
-                break;
-
+            //directional keys
+            case KeyboardEvent.KEY_RIGHT -> movement.moveRight(grid.CELL_SIZE / 4);
+            case KeyboardEvent.KEY_LEFT -> movement.moveLeft(grid.CELL_SIZE / 4);
+            case KeyboardEvent.KEY_UP -> movement.moveUp(grid.CELL_SIZE / 4);
+            case KeyboardEvent.KEY_DOWN -> movement.moveDown(grid.CELL_SIZE / 4);
+            //main input
+            case KeyboardEvent.KEY_SPACE -> character.setJumping(true);
         }
     }
 

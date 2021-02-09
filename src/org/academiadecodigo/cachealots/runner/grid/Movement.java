@@ -17,7 +17,6 @@ public class Movement {
     // TODO: 07/02/2021 keep track of a direction
 
     private Character character;
-    private Rectangle characterRectangle;
     public boolean reachTheTop;
 
 
@@ -38,16 +37,7 @@ public class Movement {
 
     }
 
-    public Movement(Keyboard keyboard, RunnerKeyboardHandler handler, Grid grid, Rectangle characterRectangle) {
-
-        this.grid = grid;
-        this.keyboard = keyboard;
-        this.handler = handler;
-        this.characterRectangle = characterRectangle;
-
-    }
-
-    public void simpleMovement() {
+    public void addListeners() {
 
         keyboard.addEventListener(KeyboardEvent.KEY_RIGHT, KeyboardEventType.KEY_PRESSED);
         keyboard.addEventListener(KeyboardEvent.KEY_LEFT, KeyboardEventType.KEY_PRESSED);

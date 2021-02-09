@@ -1,8 +1,8 @@
 package org.academiadecodigo.cachealots.runner.character;
 
 public enum CharacterType {
-    COOL("resources/"),
     ALEX("resources/alex.jpg"),
+    COOL("resources/"),
     MARI_YODA("resources/"),
     KIRBY("resources/"),
     DAME_TU_COSITA("resources/"),
