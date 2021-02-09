@@ -1,4 +1,5 @@
 package org.academiadecodigo.cachealots.runner;
+
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Movement;
 import org.academiadecodigo.simplegraphics.graphics.Color;
@@ -6,12 +7,7 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
-import org.w3c.dom.html.HTMLImageElement;
-
-import java.sql.Time;
-
 import static java.lang.Thread.sleep;
-
 
 public class Game {
 
@@ -27,11 +23,13 @@ public class Game {
     private Rectangle testAttacker2;
     private Rectangle testAttacker3;
     private Rectangle testAttacker4;
+    private Rectangle testAttacker5;
+    private Rectangle testAttacker6;
+    private Rectangle testAttacker7;
 
     protected boolean jumping;
 
     private Thread Thread1;
-    private Thread Thread2;
 
 
     //  public int time = (int) System.currentTimeMillis();
@@ -65,6 +63,15 @@ public class Game {
         testAttacker4 = new Rectangle((grid.getWidth() - grid.getCellSize()) + grid.getPadding()*5, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
         testAttacker4.setColor(Color.PINK);
 
+        testAttacker5 = new Rectangle((grid.getWidth() - grid.getCellSize()) + grid.getPadding()*5, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
+        testAttacker5.setColor(Color.BLACK);
+
+        testAttacker6 = new Rectangle((grid.getWidth() - grid.getCellSize()) + grid.getPadding()*5, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
+        testAttacker6.setColor(Color.YELLOW);
+
+        testAttacker7 = new Rectangle((grid.getWidth() - grid.getCellSize()) + grid.getPadding()*5, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
+        testAttacker7.setColor(Color.PINK);
+
         handler = new RunnerKeyboardHandler(grid, this);
         keyboard = new Keyboard(handler);
         move = new Movement(keyboard, handler, grid, characterShape);
@@ -72,10 +79,6 @@ public class Game {
 
 
 
-        //TODO: replace with call to BlockFactory.createBlock();
-
-        //floorShape = new Rectangle(grid.getPadding(), (grid.getHeight() - (2 * grid.getCellSize())) + grid.getY(), grid.getWidth(), (1 * grid.getCellSize()) - grid.getPadding());
-        //floorShape.setColor(Color.DARK_GRAY);
     }
 
     public void jump(boolean j) {
@@ -93,7 +96,7 @@ public class Game {
 
     final Thread thread1 = new Thread() {
         public void run() {
-            for (int i = 0; i <= 380; i++) {
+            for (int i = 0; i <= grid.getWidth()/2.7 ; i++) {
                 testAttacker1.translate(-grid.CELL_SIZE/8, 0);
                 try {
                     sleep(15);
@@ -101,8 +104,7 @@ public class Game {
                     e.printStackTrace();
                 }
             }
-
-            for (int i = 0; i <= 380; i++) {
+            for (int i = 0; i <= grid.getWidth()/2.7 ; i++) {
                 testAttacker2.translate(-grid.CELL_SIZE/8, 0);
                 try {
                     sleep(13);
@@ -110,7 +112,7 @@ public class Game {
                     e.printStackTrace();
                 }
             }
-            for (int i = 0; i <= 380; i++) {
+            for (int i = 0; i <= grid.getWidth()/2.5 ; i++) {
                 testAttacker3.translate(-grid.CELL_SIZE/8, 0);
                 try {
                     sleep(10);
@@ -118,15 +120,38 @@ public class Game {
                     e.printStackTrace();
                 }
             }
-            for (int i = 0; i <= 380; i++) {
+            for (int i = 0; i <= grid.getWidth()/2.5 ; i++) {
                 testAttacker4.translate(-grid.CELL_SIZE/8, 0);
+                try {
+                    sleep(8);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            for (int i = 0; i <= grid.getWidth()/2.7 ; i++) {
+                testAttacker5.translate(-grid.CELL_SIZE/8, 0);
+                try {
+                    sleep(13);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            for (int i = 0; i <= grid.getWidth()/2.5 ; i++) {
+                testAttacker6.translate(-grid.CELL_SIZE/8, 0);
+                try {
+                    sleep(9);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            for (int i = 0; i <= grid.getWidth()/2.5 ; i++) {
+                testAttacker7.translate(-grid.CELL_SIZE/8, 0);
                 try {
                     sleep(3);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
-
         }
     };
 
@@ -140,6 +165,9 @@ public class Game {
         testAttacker2.fill();
         testAttacker3.fill();
         testAttacker4.fill();
+        testAttacker5.fill();
+        testAttacker6.fill();
+        testAttacker7.fill();
         thread1.start();
 
 
@@ -148,6 +176,7 @@ public class Game {
 
 
         move.simpleMovement();
+
         //floorShape.draw();
         while(true){ //while game is not over
             //checkListener();
