@@ -16,6 +16,8 @@ public class BlockFactory {
 
 
         return block;
+
+
         /*int random = (int) (Math.random() * BlockType.values().length);
         BlockType blockType = BlockType.values()[random];
 

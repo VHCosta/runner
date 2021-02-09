@@ -23,6 +23,7 @@ public class Game {
     protected boolean jumping;
     private Block obstacle;
 
+
   //  public int time = (int) System.currentTimeMillis();
 //    public int meter = grid.CELL_SIZE;
 
@@ -32,7 +33,7 @@ public class Game {
     // [] background (Grid class?)
     // [] char sprites
 
-    public Game(int cols, int rows) {
+    public Game(int cols, int rows) throws InterruptedException {
 
         grid = new Grid(cols, rows);
         characterShape = new Rectangle((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
@@ -62,6 +63,13 @@ public class Game {
         this.jumping = j;
     }
 
+    final Thread thread1 = new Thread() {
+        public void run() {
+            obstacle.move();
+        }
+    };
+
+
     public boolean added;
     void checkListener(){
         if (!added){
@@ -80,6 +88,9 @@ public class Game {
         rectangleHide.fill();
         move.simpleMovement();
         obstacle.getObstacle().fill();
+
+
+        thread1.start();
 
 
         //floorShape.draw();
