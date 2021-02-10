@@ -90,15 +90,15 @@ public class Game {
             while(jumping){
                 while(rtf==false) {
                     int initialJumpY=characterShape.getY();
-                    speed=-(jumpUpInitialSpeed+(-g*System.currentTimeMillis()-t0));
-                    move.moveUp(speed);
-                    if(characterShape.getY()-speed>=characterShape.getY()-100){
+                    double t=System.currentTimeMillis()-t0;
+                    d = (g*Math.pow(t/1000,2))/2;
+                    if(characterShape.getY()-d>=characterShape.getY()-100){
                         //tM=2*jumpUpInitialSpeed*Math.sin(90)/g;
-                        System.out.println(System.currentTimeMillis()-t0);
-                        System.out.println(speed);
-                        move.moveUp(speed);
+                        move.moveUp(d);
                         Thread.sleep(20);
-                        if(characterShape.getY()-speed<=initialJumpY-100){
+                        System.out.println(characterShape.getY());
+                        System.out.println(characterShape.getY()-d);
+                        if(characterShape.getY()+d<=initialJumpY-100){
                             move.moveUp(characterShape.getY()-(initialJumpY-100));
                             rtf = true;
                             Thread.sleep(2);
@@ -107,7 +107,7 @@ public class Game {
                 }
                 while(rtf==true) {
                     double t=System.currentTimeMillis()-t0;
-                    d = (10*Math.pow(t/1000,2))/2;
+                    d = (g*Math.pow(t/1000,2))/2;
                     move.moveDown(d);
                     Thread.sleep(2);
                     if(characterShape.getY()+d>=245) {
