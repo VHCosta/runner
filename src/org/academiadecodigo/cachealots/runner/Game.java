@@ -4,9 +4,11 @@ import org.academiadecodigo.cachealots.runner.character.Character;
 import org.academiadecodigo.cachealots.runner.character.CharacterType;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Movement;
+import org.academiadecodigo.cachealots.runner.movingGFX.MovingGround;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 
 public class Game {
@@ -17,7 +19,7 @@ public class Game {
     private Rectangle rectangleHide;
     private Movement move;
     private Character character;
-
+    private MovingGround ground;
 
     public Game(int cols, int rows) {
 
@@ -33,6 +35,7 @@ public class Game {
         keyboard = new Keyboard(handler);
 
         move = new Movement(keyboard, handler, grid, character);
+        ground = new MovingGround(grid);
 
     }
 
@@ -52,9 +55,18 @@ public class Game {
         //add listeners
         move.addListeners();
 
+        ground.drawGround();
+
+
+
+
+
+
         //game loop
         while(true){ //while game is not over
 
+
+            //jumping mechanic
             while(character.isJumping()){
 
                 //upwards

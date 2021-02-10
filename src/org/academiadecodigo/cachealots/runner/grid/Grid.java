@@ -1,5 +1,6 @@
 package org.academiadecodigo.cachealots.runner.grid;
 
+import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -12,15 +13,22 @@ public class Grid {
 
     public final int PADDING = 10;
     public final int CELL_SIZE = 30;
-
+    public final int GROUND_X = PADDING;
+    public final int GROUND_Y = 9 * CELL_SIZE;
 
     //-- Properties
 
     private int cols;
     private int rows;
-    private Rectangle rectangle;
+    private Rectangle outline;
+    private Rectangle sky;
 
-    Picture backGround;
+
+
+
+
+    //temp image for background
+    private Picture background;
 
 
     //Behavior
@@ -31,8 +39,14 @@ public class Grid {
         this.cols = cols;
         this.rows = rows;
 
-        backGround = new Picture(PADDING, PADDING, "resources/backGround.png");
-        rectangle = new Rectangle(PADDING, PADDING, backGround.getWidth(), backGround.getHeight());
+
+
+        background = new Picture(PADDING, PADDING, "resources/backGround.png");
+        sky = new Rectangle(PADDING, PADDING, background.getWidth(), background.getHeight());
+        outline = new Rectangle(PADDING, PADDING, background.getWidth(), background.getHeight());
+
+
+
 
     }
 
@@ -41,13 +55,13 @@ public class Grid {
 
     //-- Initialize: show grid on the screen
     public void init(){
-        //rectangle.setColor(Color.CYAN);
-        backGround.draw();
-        rectangle.draw();
+
+        sky.setColor(Color.CYAN);
+        sky.fill();
+        //background.draw();
+        outline.draw();
 
 
-        //outline.setColor(Color.DARK_GRAY);
-        //outline.draw();
     }
 
 
@@ -77,22 +91,22 @@ public class Grid {
     //--- X & Y
 
     public int getX(){
-        return rectangle.getX() + PADDING;
+        return outline.getX() + PADDING;
     }
 
     public int getY(){
-        return rectangle.getY() + PADDING;
+        return outline.getY() + PADDING;
     }
 
 
     //--- Width & Height
 
     public int getWidth(){
-        return rectangle.getWidth();
+        return outline.getWidth();
     }
 
     public int getHeight(){
-        return rectangle.getHeight();
+        return outline.getHeight();
     }
 
 
