@@ -34,17 +34,7 @@ public class MovingGround {
         tile2 = new Picture(grid.PADDING, GROUND_Y, "resources/ground_frames/ground_frame2.png");
         tile3 = new Picture(grid.PADDING, GROUND_Y, "resources/ground_frames/ground_frame3.png");
 
-        for(int i = 0; i < 20; i++){
             tile1.draw();
-            Thread.sleep(200);
-            tile1.delete();
-            tile2.draw();
-            Thread.sleep(200);
-            tile2.delete();
-            tile3.draw();
-            Thread.sleep(200);
-            tile3.delete();
-        }
 
 
 
