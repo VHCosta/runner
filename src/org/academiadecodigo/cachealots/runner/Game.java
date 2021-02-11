@@ -12,7 +12,7 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 
 public class Game {
 
-    private Grid grid;
+    public static Grid grid = new Grid();
     private Keyboard keyboard;
     private RunnerKeyboardHandler handler;
     //temporary shape as placeholder
@@ -21,7 +21,7 @@ public class Game {
     private Movement move;
     private Rectangle floorShape;
     protected boolean jumping;
-    private Block obstacle;
+    public BlockFactory factory;
 
 
   //  public int time = (int) System.currentTimeMillis();
@@ -35,7 +35,6 @@ public class Game {
 
     public Game(int cols, int rows) throws InterruptedException {
 
-        grid = new Grid(cols, rows);
         characterShape = new Rectangle((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
         characterShape.setColor(Color.BLUE);
         rectangleHide = new Rectangle(0,0,grid.PADDING, grid.getHeight()+ grid.PADDING);
@@ -44,10 +43,9 @@ public class Game {
         keyboard = new Keyboard(handler);
         move = new Movement(keyboard, handler, grid, characterShape);
         handler.setMovement(move);
+        factory = new BlockFactory();
 
 
-        obstacle = BlockFactory.getNewBlock(this.grid);
-        obstacle.getObstacle().setColor(Color.RED);
 
 
 
@@ -62,13 +60,6 @@ public class Game {
     public void jump(boolean j) {
         this.jumping = j;
     }
-
-    final Thread thread1 = new Thread() {
-        public void run() {
-            obstacle.move();
-        }
-    };
-
 
     public boolean added;
     void checkListener(){
@@ -87,15 +78,31 @@ public class Game {
         characterShape.fill();
         rectangleHide.fill();
         move.simpleMovement();
-        obstacle.getObstacle().fill();
 
 
-        thread1.start();
 
 
         //floorShape.draw();
+            int counter = 0;
         while(true){ //while game is not over
-            //checkListener();
+
+            Thread.sleep(20);
+
+            counter++;
+
+            if(counter % 50 == 0){
+                factory.create();
+            }
+
+            for (Block b : factory){
+              if(b.isOnScreen()){
+                b.move();
+              }
+            }
+
+
+            factory.removeOffscreenBlocks();
+
             while(jumping){
                 move.moveUp( grid.CELL_SIZE/3);
                 System.out.println("up");
@@ -156,7 +163,6 @@ public class Game {
 
 
             }
-        Thread.sleep(20);
         }
 
     }

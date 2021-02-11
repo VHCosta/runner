@@ -27,10 +27,7 @@ public class Grid {
 
     //-- Constructor
 
-    public Grid(int cols, int rows){
-        this.cols = cols;
-        this.rows = rows;
-
+    public Grid(){
 
         backGround = new Picture(PADDING, PADDING, "resources/backGround.png");
         rectangle = new Rectangle(PADDING, PADDING, backGround.getWidth(), backGround.getHeight());

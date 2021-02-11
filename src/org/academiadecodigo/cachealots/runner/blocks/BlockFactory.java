@@ -1,44 +1,50 @@
 package org.academiadecodigo.cachealots.runner.blocks;
 
+import org.academiadecodigo.cachealots.runner.Game;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Position;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
-public class BlockFactory {
-
-    // Manufactures new random Block
-    //return a new block
-
-    public static Block getNewBlock(Grid grid) {
-
-        Block block = new Block(grid);
+import java.util.*;
 
 
-        return block;
+public class BlockFactory implements Iterable<Block>{
 
 
-        /*int random = (int) (Math.random() * BlockType.values().length);
-        BlockType blockType = BlockType.values()[random];
+    private LinkedList<Block> blockList = new LinkedList<>();
 
-        Block block;
 
-        switch (blockType) {
-            case FAT_BLOCK:
-                block = new FatBlock();
-                break;
-            case DOUBLE_BLOCK:
-                block = new DoubleBlock();
-                break;
-            case SINGLE_BLOCK:
-                block = new SingleBlock();
-                break;
-            default:
-                block = new SingleBlock();
+    public void create(){
+        blockList.add(new Block(Game.grid));
+
+
+    }
+
+    public boolean hasNext(){
+        return blockList.iterator().hasNext();
+    }
+
+    public void delete(){
+        blockList.remove();
+    }
+
+    public void removeOffscreenBlocks(){
+
+        for (Block block: blockList){
+
+            if (!block.isOnScreen()){
+                System.out.println(block);
+                delete();
+                System.out.println(block);
+            }
+            System.out.println(blockList);
         }
+    }
 
-        return block; */
 
-
+    @Override
+    public Iterator<Block> iterator() {
+        return blockList.listIterator();
     }
 }
