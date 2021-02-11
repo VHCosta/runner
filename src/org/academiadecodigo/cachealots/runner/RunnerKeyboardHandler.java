@@ -9,12 +9,9 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class RunnerKeyboardHandler implements KeyboardHandler {
 
-    private Picture picture;
     private Grid grid;
     private Movement movement;
     private Game game;
-
-
 
 
     public RunnerKeyboardHandler(Grid grid, Game game){
@@ -23,10 +20,6 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
 
     }
 
-    public RunnerKeyboardHandler(Picture picture, Grid grid){
-        this.picture = picture;
-        this.grid = grid;
-    }
 
     public void setMovement(Movement movement) {
         this.movement = movement;
@@ -36,22 +29,24 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
     public void keyPressed(KeyboardEvent keyboardEvent) {
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_RIGHT:
-                movement.moveRight(grid.CELL_SIZE/4);
+                movement.moveRight(1);
                 break;
             case KeyboardEvent.KEY_LEFT:
-                movement.moveLeft(grid.CELL_SIZE/4);
+                movement.moveLeft(1);
                 break;
             case KeyboardEvent.KEY_UP:
-                movement.moveUp(grid.CELL_SIZE/4);
+                movement.moveUp(1);
                 break;
             case KeyboardEvent.KEY_DOWN:
-                movement.moveDown(grid.CELL_SIZE/4);
+                movement.moveDown(1);
                 break;
+
+
             case KeyboardEvent.KEY_SPACE:
-                System.out.println("space");
-                game.jump(true);
-                System.out.println(game.jumping);
+                game.character.setJumping(true);
+                // movement.jumping(movement.reachTheTop, game.characterShape);
                 break;
+
 
         }
     }
@@ -60,5 +55,8 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
     }
-
+/*
+    public void setRectangle(Rectangle rectangle) {
+        this.rectangle = rectangle;
+    }*/
 }//end of RunnerKeyboardHandler class

@@ -1,70 +1,87 @@
 package org.academiadecodigo.cachealots.runner.grid;
 
+import org.academiadecodigo.cachealots.runner.Game;
 import org.academiadecodigo.cachealots.runner.RunnerKeyboardHandler;
 import org.academiadecodigo.cachealots.runner.character.Character;
-import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 
+import static java.lang.Thread.sleep;
+
+
 public class Movement {
 
-    private Grid grid;
-    private Keyboard keyboard;
-    private RunnerKeyboardHandler handler;
 
-    // TODO: 07/02/2021 keep track of a direction
+    private Grid grid;
+    private Game game;
 
     private Character character;
-    private Rectangle characterRectangle;
-    public boolean reachTheTop;
 
 
-    public void setReachTheTop() throws InterruptedException {
-        Thread.sleep(200);
-        this.reachTheTop = true;
-        System.out.println("reached the top");
-        moveDown( grid.CELL_SIZE * 2);
-        System.out.println("after going down");
-    }
+
+    public boolean reachTheTop = false;
+    public int jumpHigh = 180;
+    public int floorHigh = 245;
 
 
-    public Movement(Keyboard keyboard, RunnerKeyboardHandler handler, Grid grid, Rectangle characterRectangle) {
 
+
+    public Movement(Grid grid, Character character, Game game){
+        this.game = game;
         this.grid = grid;
-        this.keyboard = keyboard;
-        this.handler = handler;
-
-        this.characterRectangle = characterRectangle;
+        this.character = character;
 
     }
 
-    public void simpleMovement() {
-
-        keyboard.addEventListener(KeyboardEvent.KEY_RIGHT, KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(KeyboardEvent.KEY_LEFT, KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(KeyboardEvent.KEY_UP, KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(KeyboardEvent.KEY_DOWN, KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
-
-    }
-
-    // TODO: 07/02/2021 implement general movement method
-    // TODO: 07/02/2021 these should change direction state, instead of moving rectangle
-    public void moveUp(int distance){
-        characterRectangle.translate(0, -distance);
-    }
 
     public void moveDown(int distance){
-        characterRectangle.translate(0, distance);
+        character.getSprite().translate(0, 10);
     }
-
+    public void moveUp(int distance){
+        character.getSprite().translate(0, -10);
+    }
     public void moveRight(int distance){
-        characterRectangle.translate(distance, 0);
+        character.getSprite().translate(10, 0);
+    }
+    public void moveLeft(int distance){
+        character.getSprite().translate(-10, 0);
     }
 
-    public void moveLeft(int distance){
-        characterRectangle.translate(-distance, 0);
+    public void setReachTheTop(boolean reachTheTop) {
+        this.reachTheTop = reachTheTop;
+    }
+
+
+    public void jumping(boolean reachTheTop, Rectangle characterRectangle) {
+
+
+        if(!reachTheTop && (characterRectangle.getY() > jumpHigh)){
+            moveUp(65);
+        }
+        if(characterRectangle.getY() > jumpHigh){
+            setReachTheTop(true);
+        }
+        if(reachTheTop && (characterRectangle.getY() < floorHigh)){
+            moveDown(65);
+        }
+        if(characterRectangle.getY() == floorHigh){
+            setReachTheTop(false);
+        }
+    }
+
+
+
+    public void blocksMove() {
+    }
+
+
+    public void playerMove(boolean jumping) {
+        if (jumping) {
+            moveUp(1);
+        } else if(!jumping){
+            moveDown(1);
+        } else {}
     }
 }

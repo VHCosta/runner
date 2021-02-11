@@ -1,24 +1,34 @@
 package org.academiadecodigo.cachealots.runner.character;
-
-import org.academiadecodigo.cachealots.runner.blocks.BlockType;
+import org.academiadecodigo.cachealots.runner.grid.Direction;
+import org.academiadecodigo.cachealots.runner.grid.Grid;
+import org.academiadecodigo.cachealots.runner.grid.Movement;
 import org.academiadecodigo.cachealots.runner.grid.Position;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
-
 public class Character {
 
     // class with the characteristics of the running blocks
-
-    private boolean crashed;
     private Picture sprite;
-    private Position pos;
     private CharacterType characterType;
+    private Grid grid;
+    private Movement movement;
+    private Direction CurrentDirection;
+    private boolean jumping;
+    private boolean crashed;
 
-    public Character(CharacterType characterType){
+    public boolean reachTheTop = false;
+    public int jumpHigh = 180;
+    public int floorHigh = 245;
+
+    public void setReachTheTop(boolean reachTheTop) {
+        this.reachTheTop = reachTheTop;
+    }
+
+
+    public Character(CharacterType characterType, Grid grid){
         pos = new Position();
-
+        this.grid = grid;
         this.characterType = characterType;
-
-        this.sprite = new Picture(pos.getCol(), pos.getRow(), characterType.getSource());
+        this.sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), characterType.getSource());
     }
 
     public Position getPos() {
@@ -29,6 +39,14 @@ public class Character {
         return crashed;
     }
 
+    public boolean isJumping() {
+        return jumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
+    }
+
     public void setCrashed(boolean crashed) {
         this.crashed = crashed;
     }
@@ -37,5 +55,7 @@ public class Character {
         this.pos = pos;
     }
 
-
+    public Picture getSprite() {
+        return sprite;
+    }
 }

@@ -1,41 +1,27 @@
 package org.academiadecodigo.cachealots.runner.blocks;
-
+import org.academiadecodigo.cachealots.runner.Game;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Position;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-/*
-public class BlockFactory {
+import java.util.*;
 
-    // Manufactures new random Block
-    //return a new block
+public class BlockFactory implements Iterable<Block>{
 
-    public static Block getNewBlock(Grid grid) {
+    private LinkedList<Block> blockList = new LinkedList<>();
 
-        Block block = new Block(new Position());
-        return block;
-        /*int random = (int) (Math.random() * BlockType.values().length);
-        BlockType blockType = BlockType.values()[random];
+    public void create(){
 
-        Block block;
-
-        switch (blockType) {
-            case FAT_BLOCK:
-                block = new FatBlock();
-                break;
-            case DOUBLE_BLOCK:
-                block = new DoubleBlock();
-                break;
-            case SINGLE_BLOCK:
-                block = new SingleBlock();
-                break;
-            default:
-                block = new SingleBlock();
-        }
-
-        return block;
+        if(!blockList.iterator().hasNext())
+            blockList.add(new Block(Game.grid));
     }
 
-    //new Rectangle((grid.getWidth() - 1), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
+    public void delete(){
+        blockList.remove();
+    }
+
+    @Override
+    public Iterator<Block> iterator() {
+        return blockList.listIterator();
+    }
 }
-*/
