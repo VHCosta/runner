@@ -70,6 +70,7 @@ public class Game {
 
 
     public void start() throws InterruptedException {
+        double t0 = 0;
 
         while(true) {
 

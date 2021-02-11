@@ -1,12 +1,8 @@
 package org.academiadecodigo.cachealots.runner.grid;
 
 import org.academiadecodigo.cachealots.runner.Game;
-import org.academiadecodigo.cachealots.runner.RunnerKeyboardHandler;
 import org.academiadecodigo.cachealots.runner.character.Character;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 
 import static java.lang.Thread.sleep;
 
@@ -36,11 +32,11 @@ public class Movement {
     }
 
 
-    public void moveDown(int distance){
-        character.getSprite().translate(0, 10);
+    public void moveDown(double distance){
+        character.getSprite().translate(0, distance);
     }
-    public void moveUp(int distance){
-        character.getSprite().translate(0, -10);
+    public void moveUp(double distance){
+        character.getSprite().translate(0, -distance);
     }
     public void moveRight(int distance){
         character.getSprite().translate(10, 0);
@@ -48,12 +44,11 @@ public class Movement {
     public void moveLeft(int distance){
         character.getSprite().translate(-10, 0);
     }
-
     public void setReachTheTop(boolean reachTheTop) {
         this.reachTheTop = reachTheTop;
     }
 
-
+/*
     public void jumping(boolean reachTheTop, Rectangle characterRectangle) {
 
 
@@ -69,7 +64,46 @@ public class Movement {
         if(characterRectangle.getY() == floorHigh){
             setReachTheTop(false);
         }
+    }*/
+
+    public void movejump(boolean, timesGoingUp) {
+        double g = 9.8;
+        double d = 0;
+        double t0 = System.currentTimeMillis();
+
+        if (character.isJumping()) {
+            if (boolean == true) {
+                timesGoingUp++;
+                if (timesGoingUp == 10) {
+                    moveUp(grid.CELL_SIZE / 3);
+                    boolean = false;
+                    timesGoingUp = 0;
+                }
+                moveUp(grid.CELL_SIZE / 3);
+            }
+            if (boolean == false) {
+                double t = System.currentTimeMillis() - t0;
+                d = (g * Math.pow(t / 1000, 2)) / 2;
+                moveDown(d);
+                if (character.getSprite().getY() + d >= 245) {
+                    moveDown(245 - character.getSprite().getY());
+                    d = 0;
+                    character.setJumping(false);
+                }
+            }
+        }
     }
+        /*
+        if(jumping){
+            current direction = UP;}
+        if(Sprite.getY() <= JUMPHEIGHT){
+            current direction = DOWN;
+            jumping = false;
+            if(Sprite.getY ==FLOOR){
+                current direction = none;
+            }
+        }
+        movement.move(curent direction);
 
 
 
@@ -83,5 +117,6 @@ public class Movement {
         } else if(!jumping){
             moveDown(1);
         } else {}
-    }
+
+    }*/
 }

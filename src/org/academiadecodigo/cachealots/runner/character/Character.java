@@ -58,4 +58,5 @@ public class Character {
     public Picture getSprite() {
         return sprite;
     }
+
 }
