@@ -15,6 +15,8 @@ public class Movement {
 
     private Character character;
 
+    int timesGoingUp;
+    boolean test;
 
 
     public boolean reachTheTop = false;
@@ -66,22 +68,22 @@ public class Movement {
         }
     }*/
 
-    public void movejump(boolean, timesGoingUp) {
+    public void movejump() {
         double g = 9.8;
         double d = 0;
         double t0 = System.currentTimeMillis();
 
         if (character.isJumping()) {
-            if (boolean == true) {
+            if (test) {
                 timesGoingUp++;
                 if (timesGoingUp == 10) {
                     moveUp(grid.CELL_SIZE / 3);
-                    boolean = false;
+                    test = false;
                     timesGoingUp = 0;
                 }
                 moveUp(grid.CELL_SIZE / 3);
             }
-            if (boolean == false) {
+            if (!test) {
                 double t = System.currentTimeMillis() - t0;
                 d = (g * Math.pow(t / 1000, 2)) / 2;
                 moveDown(d);

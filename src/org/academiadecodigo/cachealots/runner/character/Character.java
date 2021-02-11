@@ -10,8 +10,10 @@ public class Character {
     private Picture sprite;
     private CharacterType characterType;
     private Grid grid;
+
     private Movement movement;
     private Direction CurrentDirection;
+
     private boolean jumping;
     private boolean crashed;
 
@@ -25,15 +27,11 @@ public class Character {
 
 
     public Character(CharacterType characterType, Grid grid){
-        pos = new Position();
         this.grid = grid;
         this.characterType = characterType;
         this.sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), characterType.getSource());
     }
 
-    public Position getPos() {
-        return pos;
-    }
 
     public boolean isCrashed() {
         return crashed;
@@ -51,8 +49,8 @@ public class Character {
         this.crashed = crashed;
     }
 
-    public void setPos(Position pos) {
-        this.pos = pos;
+    public Movement getMovement() {
+        return movement;
     }
 
     public Picture getSprite() {
