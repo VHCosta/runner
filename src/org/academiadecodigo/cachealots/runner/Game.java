@@ -21,6 +21,10 @@ public class Game {
     private Character character;
     private MovingGround ground;
 
+    public static int timer;
+
+
+
     public Game(int cols, int rows) {
 
         grid = new Grid(cols, rows);
@@ -72,13 +76,11 @@ public class Game {
                 //upwards
                 for (int i = 0; i < 18; i++) {
                     move.moveUp( grid.CELL_SIZE/4);
-                    Thread.sleep(20);
                 }
 
                 //downwards
                 for (int i = 0; i < 18; i++) {
                     move.moveDown(grid.CELL_SIZE/4);
-                    Thread.sleep(12);
                 }
 
                 character.setJumping(false);

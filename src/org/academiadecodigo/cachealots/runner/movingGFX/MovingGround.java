@@ -30,19 +30,19 @@ public class MovingGround {
         int GROUND_X = grid.getWidth() - 3 * grid.CELL_SIZE;
         int GROUND_Y = grid.GROUND_Y;
 
-        tile1 = new Picture(grid.PADDING, GROUND_Y, "resources/ground_frames/cell_1.png");
-        tile2 = new Picture(grid.PADDING, GROUND_Y, "resources/ground_frames/cell_2.png");
-        tile3 = new Picture(grid.PADDING, GROUND_Y, "resources/ground_frames/cell_3.png");
+        tile1 = new Picture(grid.PADDING, GROUND_Y, "resources/ground_frames/ground_frame1.png");
+        tile2 = new Picture(grid.PADDING, GROUND_Y, "resources/ground_frames/ground_frame2.png");
+        tile3 = new Picture(grid.PADDING, GROUND_Y, "resources/ground_frames/ground_frame3.png");
 
         for(int i = 0; i < 20; i++){
             tile1.draw();
-            Thread.sleep(100);
+            Thread.sleep(200);
             tile1.delete();
             tile2.draw();
-            Thread.sleep(100);
+            Thread.sleep(200);
             tile2.delete();
             tile3.draw();
-            Thread.sleep(100);
+            Thread.sleep(200);
             tile3.delete();
         }
 
