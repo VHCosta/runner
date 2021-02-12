@@ -1,38 +1,44 @@
 package org.academiadecodigo.cachealots.runner.blocks;
 
-import org.academiadecodigo.cachealots.runner.grid.Grid;
-import org.academiadecodigo.simplegraphics.graphics.Color;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-/*
+import org.academiadecodigo.cachealots.runner.Game;
+
+import java.util.AbstractSequentialList;
+import java.util.Iterator;
+import java.util.LinkedList;
+
 public class BlockFactory {
 
-    // Manufactures new random Block
-    //return a new block
 
-    public static Block getNewBlock(Grid grid) {
+    private AbstractSequentialList<Block> blockList = new LinkedList<>();
 
-        int random = (int) (Math.random() * BlockType.values().length);
-        BlockType blockType = BlockType.values()[random];
 
-        Block block;
-
-        switch (blockType) {
-            case FAT_BLOCK:
-                block = new FatBlock();
-                break;
-            case DOUBLE_BLOCK:
-                block = new DoubleBlock();
-                break;
-            case SINGLE_BLOCK:
-                block = new SingleBlock();
-                break;
-            default:
-                block = new SingleBlock();
-        }
-
-        return block;
+    public void create(){
+        blockList.add(new Block(Game.grid));
     }
 
-    //new Rectangle((grid.getWidth() - 1), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
+    public boolean hasNext(){
+        return blockList.iterator().hasNext();
+    }
+
+    public void delete(Block block) {
+        blockList.remove(block);
+    }
+
+    public void removeOffscreenBlocks(){
+
+        for (int i = 0; i < blockList.size(); i++) {
+            Block block = blockList.get(i);
+
+            if (!block.isOnScreen()) {
+                //System.out.println(block);
+                delete(block);
+                //System.out.println(block);
+            }
+            //System.out.println(blockList);
+        }
+    }
+
+    public Iterator<Block> iterator() {
+        return blockList.listIterator();
+    }
 }
-*/

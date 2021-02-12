@@ -1,76 +1,76 @@
 package org.academiadecodigo.cachealots.runner.grid;
 
-import org.academiadecodigo.cachealots.runner.RunnerKeyboardHandler;
+import org.academiadecodigo.cachealots.runner.Game;
+import org.academiadecodigo.cachealots.runner.blocks.Block;
 import org.academiadecodigo.cachealots.runner.character.Character;
-import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
-import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
+
+import static java.lang.Thread.sleep;
+
 
 public class Movement {
 
+
     private Grid grid;
-    private Keyboard keyboard;
-    private RunnerKeyboardHandler handler;
-
-    // TODO: 07/02/2021 keep track of a direction
-
+    private Game game;
+    private Block block;
     private Character character;
-    private Rectangle characterRectangle;
-    public boolean reachTheTop;
 
+    public final int JUMP_HEIGHT = 150;
+    public final int FLOOR_HEIGHT = 246;
 
-    public void setReachTheTop() throws InterruptedException {
-        Thread.sleep(200);
-        this.reachTheTop = true;
-        System.out.println("reached the top");
-        moveDown( grid.CELL_SIZE * 2);
-        System.out.println("after going down");
-    }
-
-
-    public Movement(Keyboard keyboard, RunnerKeyboardHandler handler, Grid grid, Rectangle characterRectangle) {
-
+    public Movement(Grid grid, Character character) {
         this.grid = grid;
-        this.keyboard = keyboard;
-        this.handler = handler;
-
-<<<<<<< HEAD
-        characterRectangle = new Rectangle((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
-        characterRectangle.setColor(Color.BLUE);
-=======
-        this.characterRectangle = characterRectangle;
->>>>>>> 2665c62da268107f038f65dc69a9a4ba6fa3a584
-
+        this.character = character;
     }
 
-    public void simpleMovement() {
-
-        keyboard.addEventListener(KeyboardEvent.KEY_RIGHT, KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(KeyboardEvent.KEY_LEFT, KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(KeyboardEvent.KEY_UP, KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(KeyboardEvent.KEY_DOWN, KeyboardEventType.KEY_PRESSED);
-        keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
-
+    public Movement(Grid grid, Block block) {
+        this.grid = grid;
+        this.block = block;
     }
 
-    // TODO: 07/02/2021 implement general movement method
-    // TODO: 07/02/2021 these should change direction state, instead of moving rectangle
-    public void moveUp(int distance){
-        //this.direction = UP;
-        characterRectangle.translate(0, -distance);
+    public void moveDown(double distance) {
+        character.getSprite().translate(0, distance);
     }
 
-    public void moveDown(int distance){
-        characterRectangle.translate(0, distance);
+    public void moveUp(double distance) {
+        character.getSprite().translate(0, -distance);
     }
 
-    public void moveRight(int distance){
-        characterRectangle.translate(distance, 0);
+    public void moveRight(int distance) {
+        character.getSprite().translate(10, 0);
     }
 
-    public void moveLeft(int distance){
-        characterRectangle.translate(-distance, 0);
+    public void moveLeft(int distance) {
+        character.getSprite().translate(-13, 0);
     }
+
+
+    public void moveBlock(Direction dir) {
+        block.getObstacle().translate(-5, 0);
+    }
+
+    public void move(Direction dir) {
+        switch (dir) {
+            case UP:
+                character.getSprite().translate(0, -4);
+                break;
+            case DOWN:
+                int currentPosition = character.getSprite().getY();
+                if (character.getSprite().getY() > character.getInitialPos()) {
+                    character.getSprite().translate(0, character.getInitialPos() - currentPosition - 4);
+                }
+                character.getSprite().translate(0, 5);
+                break;
+            case LEFT:
+                character.getSprite().translate(-5, 0);
+                break;
+            case RIGHT:
+                character.getSprite().translate(5, 0);
+                break;
+            case NONE:
+                break;
+        }
+    }
+
 }

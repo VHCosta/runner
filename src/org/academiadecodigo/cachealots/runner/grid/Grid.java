@@ -27,14 +27,9 @@ public class Grid {
 
     //-- Constructor
 
-    public Grid(int cols, int rows){
-        this.cols = cols;
-        this.rows = rows;
-
-
+    public Grid(){
         backGround = new Picture(PADDING, PADDING, "resources/backGround.png");
         rectangle = new Rectangle(PADDING, PADDING, backGround.getWidth(), backGround.getHeight());
-
     }
 
 
@@ -42,23 +37,10 @@ public class Grid {
 
     //-- Initialize: show grid on the screen
     public void init(){
-        //rectangle.setColor(Color.CYAN);
         backGround.draw();
         rectangle.draw();
-
-
-        //outline.setColor(Color.DARK_GRAY);
-        //outline.draw();
     }
 
-
-    //TODO: have specific methods to create characterBlock, cloudBlock, obstacleBlock
-    /*public Block makeBlock(){
-
-        //TODO: replace with call to BlockFactory.createBlock()
-        return BlockFactory.getNewBlock();
-    }
-*/
 
 
 

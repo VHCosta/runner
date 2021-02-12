@@ -2,104 +2,141 @@ package org.academiadecodigo.cachealots.runner;
 
 import org.academiadecodigo.cachealots.runner.character.Character;
 import org.academiadecodigo.cachealots.runner.character.CharacterType;
+import org.academiadecodigo.cachealots.runner.blocks.Block;
+import org.academiadecodigo.cachealots.runner.blocks.BlockFactory;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Movement;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
-<<<<<<< HEAD
-=======
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
->>>>>>> 2665c62da268107f038f65dc69a9a4ba6fa3a584
+import java.util.Iterator;
+
 
 public class Game {
 
-    private Grid grid;
+
+    public static Grid grid;
+    public static int timer = -1;
+    public Character character;
+
     private Keyboard keyboard;
     private RunnerKeyboardHandler handler;
-    //temporary shape as placeholder
-    private Rectangle characterShape;
-    private Rectangle rectangleHide;
     private Movement move;
-    private Rectangle floorShape;
-<<<<<<< HEAD
 
-    private Character character;
-=======
-    protected boolean jumping;
+    private Rectangle rectangleHideLeft;
+    private Rectangle rectangleHideRight;
+    private Movement movement;
+
+    public BlockFactory factory;
+    private boolean running;
+
+    private Picture gameOver1;
+    private Picture gameOver2;
+    private Picture gameOver3;
 
 
-    //will replace rectangle:
-    //private Picture characterSprite;
-    //TODO: get temp gfx for:
-    // [] background (Grid class?)
-    // [] char sprites
->>>>>>> 2665c62da268107f038f65dc69a9a4ba6fa3a584
+    public void init(){
 
-    public Game(int cols, int rows) {
+        grid = new Grid();
+        factory = new BlockFactory();
 
-        grid = new Grid(cols, rows);
+        rectangleHideLeft = new Rectangle(0,0,grid.PADDING, grid.getHeight()+ grid.PADDING);
+        rectangleHideLeft.setColor(Color.WHITE);
+        rectangleHideRight = new Rectangle(grid.getWidth()+ grid.PADDING,0,grid.PADDING*5, grid.getHeight());
+        rectangleHideRight.setColor(Color.WHITE);
 
-        //characterShape = new Rectangle((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
-        //characterShape.setColor(Color.BLUE);
+        character = new Character(CharacterType.MARIO, grid);
 
-        character = new Character(CharacterType.ALEX, grid);
-
-        rectangleHide = new Rectangle(0,0,grid.PADDING, grid.getHeight()+ grid.PADDING);
-        rectangleHide.setColor(Color.WHITE);
-<<<<<<< HEAD
-
-        handler = new RunnerKeyboardHandler(characterShape, grid);
-        keyboard = new Keyboard(handler);
-
-        move = new Movement(keyboard, handler, grid);
-=======
+        movement = new Movement(grid, character);
         handler = new RunnerKeyboardHandler(grid, this);
+        handler.setMovement(movement);
         keyboard = new Keyboard(handler);
-        move = new Movement(keyboard, handler, grid, characterShape);
-        handler.setMovement(move);
+        keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
+
+        gameOver1 = new Picture(grid.CELL_SIZE * 2, grid.CELL_SIZE * 1.5, "resources/willzim.png");
+        gameOver2 = new Picture(grid.CELL_SIZE * 5, grid.CELL_SIZE * 1.5, "resources/gameover2.png");
 
 
->>>>>>> 2665c62da268107f038f65dc69a9a4ba6fa3a584
-        //TODO: replace with call to BlockFactory.createBlock();
-
-        //floorShape = new Rectangle(grid.getPadding(), (grid.getHeight() - (2 * grid.getCellSize())) + grid.getY(), grid.getWidth(), (1 * grid.getCellSize()) - grid.getPadding());
-        //floorShape.setColor(Color.DARK_GRAY);
-    }
-
-    public void jump(boolean j) {
-        this.jumping = j;
-    }
-
-    public boolean added;
-    void checkListener(){
-        if (!added){
-            keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
-            added = true;
-        }
     }
 
     public void start() throws InterruptedException {
-        grid.init();
-        character.getSprite().draw();
-        rectangleHide.fill();
-        move.simpleMovement();
-        //floorShape.draw();
-        while(true){ //while game is not over
-            //checkListener();
-            while(jumping){
-                move.moveUp(3* grid.CELL_SIZE);
-                System.out.println("up");
-                Thread.sleep(200);
-                move.moveDown(3*grid.CELL_SIZE);
-                System.out.println("down");
-                jumping = false;
 
+        running = true;
+
+        while(true) {
+
+            //Game Clock for all movements
+            Thread.sleep(20);
+            timer++;
+
+            // Update screen draws
+            grid.init();
+            character.getSprite().draw();
+            rectangleHideRight.fill();
+
+            //Create obstacle blocks every x loops
+            int x = (int) (Math.random() * 10) + 90;
+
+            if(timer % 50 == 0){
+                factory.create();
             }
-        Thread.sleep(20);
+            rectangleHideLeft.fill();
+
+            factory.removeOffscreenBlocks();
+
+            //Move all
+            collisionDetector();
+
+            if(running){
+                moveAll();
+            } else break;
+
+
         }
+        gameOver1.draw();
+        gameOver2.draw();
+        System.out.println("Game Over");
 
     }
+
+    public void moveAll(){
+
+        for (Iterator<Block> it = factory.iterator(); it.hasNext(); ) {
+            Block b = it.next();
+            if(b.isOnScreen()){
+                b.move();
+            }
+        }
+        character.moveFlow();
+    }
+
+    private void collisionDetector() throws InterruptedException {
+
+
+
+        for (int Xcharacter = character.getSprite().getX(); Xcharacter<character.getSprite().getX() + character.getSprite().getWidth(); Xcharacter++){
+            for (int Ycharacter = character.getSprite().getY(); Ycharacter<character.getSprite().getY() + character.getSprite().getHeight(); Ycharacter++){
+
+                for (Iterator<Block> it = factory.iterator(); it.hasNext(); ) {
+                    Block block = it.next();
+
+                    for (int Xblock = block.getX(); Xblock<block.getX() + block.getWidth(); Xblock++){
+                        for (int Yblock = block.getY(); Yblock<block.getY() + block.getHeight(); Yblock++){
+                            if (Xcharacter == Xblock && Ycharacter == Yblock) {
+                                //Game.end(true);
+                                running = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 }
+

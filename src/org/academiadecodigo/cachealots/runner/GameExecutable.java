@@ -2,15 +2,15 @@ package org.academiadecodigo.cachealots.runner;
 
 public class GameExecutable {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
-        Game runner = new Game(22, 12);
+        Game runner = new Game();
 
-        try {
-            runner.start();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+        runner.init();
+        runner.start();
+
+
+
 
     }//end of main()
 
