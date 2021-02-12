@@ -106,6 +106,8 @@ public class Game {
         gameOver2.draw();
         System.out.println("Game Over");
 
+
+
     }
 
     public void moveAll(){
@@ -124,9 +126,8 @@ public class Game {
     private void collisionDetector() throws InterruptedException {
 
 
-
-        for (int Xcharacter = character.getSprite().getX(); Xcharacter<character.getSprite().getX() + character.getSprite().getWidth(); Xcharacter++){
-            for (int Ycharacter = character.getSprite().getY(); Ycharacter<character.getSprite().getY() + character.getSprite().getHeight(); Ycharacter++){
+        for (int Xcharacter = character.getSprite().getX(); Xcharacter < character.getSprite().getX() + character.getSprite().getWidth(); Xcharacter++){
+            for (int Ycharacter = character.getSprite().getY(); Ycharacter < character.getSprite().getY() + character.getSprite().getHeight(); Ycharacter++){
 
                 for (Iterator<Block> it = factory.iterator(); it.hasNext(); ) {
                     Block block = it.next();
@@ -144,6 +145,8 @@ public class Game {
         }
     }
 
-
+    public boolean isRunning() {
+        return running;
+    }
 }
 
