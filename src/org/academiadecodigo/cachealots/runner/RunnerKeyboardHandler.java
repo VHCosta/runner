@@ -9,13 +9,11 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class RunnerKeyboardHandler implements KeyboardHandler {
 
-    private Grid grid;
     private Movement movement;
     private Game game;
 
 
     public RunnerKeyboardHandler(Grid grid, Game game){
-        this.grid = grid;
         this.game = game;
 
     }
@@ -29,10 +27,10 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
     public void keyPressed(KeyboardEvent keyboardEvent) {
         switch (keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_RIGHT:
-                movement.moveRight(1);
+                movement.moveRight(3);
                 break;
             case KeyboardEvent.KEY_LEFT:
-                movement.moveLeft(1);
+                movement.moveLeft(3);
                 break;
             case KeyboardEvent.KEY_UP:
                 movement.moveUp(1);

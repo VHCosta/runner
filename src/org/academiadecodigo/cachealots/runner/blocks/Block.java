@@ -1,7 +1,9 @@
 package org.academiadecodigo.cachealots.runner.blocks;
 
+import org.academiadecodigo.cachealots.runner.character.Character;
+import org.academiadecodigo.cachealots.runner.grid.Direction;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
-import org.academiadecodigo.cachealots.runner.grid.Position;
+import org.academiadecodigo.cachealots.runner.grid.Movement;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
@@ -9,16 +11,28 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 public class Block {  // class with the characteristics of the running blocks
 
     private Rectangle obstacle;
-    private Position pos;
     private Grid grid;
     public boolean onScreen;
+    private Movement movement;
 
 
     public Block(Grid grid) {
         this.grid = grid;
-
+        movement = new Movement(grid, this);
         obstacle = new Rectangle(grid.getWidth() - 20, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
-        obstacle.setColor(Color.RED);
+
+        //set random color
+
+        Color[] colors = {
+                Color.BLACK,
+                Color.DARK_GRAY,
+                Color.RED,
+                Color.PINK,
+                Color.ORANGE
+        };
+        int randomColor = (int) (Math.random() * colors.length);
+        obstacle.setColor(colors[randomColor]);
+
         show();
 
     }
@@ -34,7 +48,8 @@ public class Block {  // class with the characteristics of the running blocks
     }
 
     public void move() {
-        obstacle.translate(-grid.CELL_SIZE / grid.PADDING, 0);
+        movement.moveBlock(Direction.LEFT);
+        //obstacle.translate(-grid.CELL_SIZE / grid.PADDING, 0);
     }
 
     public int getX(){

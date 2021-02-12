@@ -2,7 +2,6 @@ package org.academiadecodigo.cachealots.runner.character;
 import org.academiadecodigo.cachealots.runner.grid.Direction;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Movement;
-import org.academiadecodigo.cachealots.runner.grid.Position;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 public class Character {
 
@@ -12,24 +11,45 @@ public class Character {
     private Grid grid;
 
     private Movement movement;
-    private Direction CurrentDirection;
+    private Direction currentDirection;
 
     private boolean jumping;
     private boolean crashed;
 
-    public boolean reachTheTop = false;
-    public int jumpHigh = 180;
-    public int floorHigh = 245;
+    private int initialPos;
 
-    public void setReachTheTop(boolean reachTheTop) {
-        this.reachTheTop = reachTheTop;
-    }
+    public final int JUMP_HEIGHT = 150;
+    public final int FLOOR_HEIGHT = 246;
 
 
     public Character(CharacterType characterType, Grid grid){
         this.grid = grid;
         this.characterType = characterType;
-        this.sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), characterType.getSource());
+
+        movement = new Movement(grid, this);
+        currentDirection = Direction.NONE;
+
+        sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), characterType.getSource());
+        initialPos = getSprite().getY();
+    }
+
+
+    public void moveFlow(){
+
+        if(jumping) {
+            currentDirection = Direction.UP;
+        }
+        if(sprite.getY() <= JUMP_HEIGHT) {
+            if(sprite.getY() == FLOOR_HEIGHT){
+                currentDirection = Direction.NONE;
+            }
+            else {
+                currentDirection = Direction.DOWN;
+                jumping = false;
+            }
+        }
+
+        movement.move(currentDirection);
     }
 
 
@@ -57,4 +77,7 @@ public class Character {
         return sprite;
     }
 
+    public int getInitialPos() {
+        return initialPos;
+    }
 }

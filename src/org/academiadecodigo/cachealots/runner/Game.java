@@ -12,7 +12,9 @@ import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 
+import javax.swing.*;
 import java.util.Iterator;
+
 
 
 public class Game {
@@ -28,10 +30,9 @@ public class Game {
     private Movement movement;
 
     public BlockFactory factory;
-
     public Character character;
 
-    private Rectangle testAttacker;
+    public boolean running;
 
 
     public void init(){
@@ -44,13 +45,9 @@ public class Game {
         rectangleHideRight = new Rectangle(grid.getWidth()+ grid.PADDING,0,grid.PADDING*5, grid.getHeight());
         rectangleHideRight.setColor(Color.WHITE);
 
-
         character = new Character(CharacterType.ALEX, grid);
 
-        testAttacker = new Rectangle((grid.getWidth() - grid.getCellSize()) + grid.getPadding()*5, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
-        testAttacker.setColor(Color.BLACK);
-
-        movement = new Movement(grid, character, this);
+        movement = new Movement(grid, character);
         handler = new RunnerKeyboardHandler(grid, this);
         handler.setMovement(movement);
         keyboard = new Keyboard(handler);
@@ -61,36 +58,41 @@ public class Game {
      */
     }
 
-
     public void start() throws InterruptedException {
-        double t0 = 0;
+
+        running = true;
 
         while(true) {
 
             //Game Clock for all movements
-            Thread.sleep(30);
+            Thread.sleep(20);
             timer++;
 
             // Update screen draws
             grid.init();
-            rectangleHideLeft.fill();
-            rectangleHideRight.fill();
-            //characterShape.fill();
             character.getSprite().draw();
+            rectangleHideRight.fill();
 
-            //Create obstacle blocks every 50 loops
-            if(timer % 100 == 0){
+            //Create obstacle blocks every x loops
+            int x = (int) (Math.random() * 10) + 90;
+
+            if(timer % 50 == 0){
                 factory.create();
             }
-
+            rectangleHideLeft.fill();
 
             factory.removeOffscreenBlocks();
 
-
             //Move all
-            moveAll();
+            collisionDetector();
+
+            if(running){
+                moveAll();
+            } else break;
+
 
         }
+        System.out.println("Game Over");
     }
 
     public void moveAll(){
@@ -101,36 +103,33 @@ public class Game {
                 b.move();
             }
         }
+        //character.getMovement().
+        character.moveFlow();
 
     }
+
+    private void collisionDetector() throws InterruptedException {
+        for (int icharacter = character.getSprite().getX(); icharacter<character.getSprite().getX() + character.getSprite().getWidth(); icharacter++){
+            for (int jcharacter = character.getSprite().getY(); jcharacter<character.getSprite().getY() + character.getSprite().getHeight(); jcharacter++){
+
+                for (Iterator<Block> it = factory.iterator(); it.hasNext(); ) {
+                    Block block = it.next();
+
+                    for (int iblock = block.getX(); iblock<block.getX() + block.getWidth(); iblock++){
+                        for (int jblock = block.getY(); jblock<block.getY() + block.getHeight(); jblock++){
+                            if (icharacter == iblock && jcharacter == jblock) {
+                                //Game.end(true);
+                                running = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 }
 /*
-*private void comparadorCrashes(){   comparador jog dos carros
-
-
-        for(int x = 0; x < cars.length; x++){
-        int rolX; int colX; int colY; int rolY;
-
-            rolX = cars[x].getPos().getRow();
-            colX = cars[x].getPos().getCol();
-
-            for(int y = 0; y < cars.length; y++){
-                if(cars[x].equals(cars[y])){
-                    continue;
-                }
-                rolY = cars[y].getPos().getRow();
-                colY = cars[y].getPos().getCol();
-
-                if(rolX == rolY && colX == colY){
-                    cars[x].setCrashed(true);
-                    cars[y].setCrashed(true);
-                }
-=======
-   // public void gravityJump(){
-     //   final int GRAVITY = 10;
-       // grid.CELL_SIZE * GRAVITY * Time * Time /2;
-    //}
-
-
 
  */
