@@ -48,7 +48,7 @@ public class Movement {
 
 
     public void moveBlock(Direction dir) {
-        block.getObstacle().translate(-5, 0);
+        block.getSprite().translate(-5, 0);
     }
 
     public void move(Direction dir) {
