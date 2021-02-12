@@ -101,6 +101,8 @@ public class Game {
         gameOver2.draw();
         System.out.println("Game Over");
 
+
+
     }
 
     public void moveAll(){
@@ -117,15 +119,15 @@ public class Game {
     private void collisionDetector() throws InterruptedException {
 
 
+        for (int Xcharacter = character.getSprite().getX(); Xcharacter < (character.getSprite().getX() + character.getSprite().getWidth()); Xcharacter++){
+            for (int Ycharacter = character.getSprite().getY(); Ycharacter < (character.getSprite().getY() + character.getSprite().getHeight()); Ycharacter++){
 
-        for (int Xcharacter = character.getSprite().getX(); Xcharacter<character.getSprite().getX() + character.getSprite().getWidth(); Xcharacter++){
-            for (int Ycharacter = character.getSprite().getY(); Ycharacter<character.getSprite().getY() + character.getSprite().getHeight(); Ycharacter++){
 
                 for (Iterator<Block> it = factory.iterator(); it.hasNext(); ) {
                     Block block = it.next();
 
-                    for (int Xblock = block.getX(); Xblock<block.getX() + block.getWidth(); Xblock++){
-                        for (int Yblock = block.getY(); Yblock<block.getY() + block.getHeight(); Yblock++){
+                    for (int Xblock = block.getX(); Xblock < (block.getX() + block.getWidth()); Xblock++){
+                        for (int Yblock = block.getY(); Yblock < (block.getY() + block.getHeight()); Yblock++){
                             if (Xcharacter == Xblock && Ycharacter == Yblock) {
                                 //Game.end(true);
                                 running = false;
@@ -137,6 +139,8 @@ public class Game {
         }
     }
 
-
+    public boolean isRunning() {
+        return running;
+    }
 }
 

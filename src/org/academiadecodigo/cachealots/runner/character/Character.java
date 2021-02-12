@@ -16,12 +16,13 @@ public class Character {
     private Direction currentDirection;
 
     private boolean jumping;
-    private boolean crashed;
+    private boolean descending;
 
     private int initialPos;
 
+
     public final int JUMP_HEIGHT = 150;
-    public final int FLOOR_HEIGHT = 246;
+    public final int FLOOR_HEIGHT = 235;
 
 
     public Character(CharacterType characterType, Grid grid){
@@ -31,7 +32,7 @@ public class Character {
         movement = new Movement(grid, this);
         currentDirection = Direction.NONE;
 
-        sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.8 * grid.getCellSize())) + grid.getY(), characterType.getSource());
+        sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), FLOOR_HEIGHT, characterType.getSource());
         initialPos = getSprite().getY();
     }
 
@@ -42,8 +43,10 @@ public class Character {
             currentDirection = Direction.UP;
         }
         if(sprite.getY() <= JUMP_HEIGHT) {
+            descending = true;
             if(sprite.getY() == FLOOR_HEIGHT){
                 currentDirection = Direction.NONE;
+                descending = false;
             }
             else {
                 currentDirection = Direction.DOWN;
@@ -55,10 +58,6 @@ public class Character {
     }
 
 
-    public boolean isCrashed() {
-        return crashed;
-    }
-
     public boolean isJumping() {
         return jumping;
     }
@@ -67,8 +66,8 @@ public class Character {
         this.jumping = jumping;
     }
 
-    public void setCrashed(boolean crashed) {
-        this.crashed = crashed;
+    public boolean isDescending() {
+        return descending;
     }
 
     public Movement getMovement() {

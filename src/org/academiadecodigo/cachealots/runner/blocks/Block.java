@@ -6,6 +6,7 @@ import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Movement;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 
 public class Block {  // class with the characteristics of the running blocks
@@ -14,24 +15,26 @@ public class Block {  // class with the characteristics of the running blocks
     private Grid grid;
     public boolean onScreen;
     private Movement movement;
-
+    private Picture sprite;
 
     public Block(Grid grid) {
         this.grid = grid;
         movement = new Movement(grid, this);
-        obstacle = new Rectangle(grid.getWidth() - 20, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
+        //obstacle = new Rectangle(grid.getWidth() - 20, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
+
+        sprite = new Picture(grid.getWidth() - 20, (grid.getHeight() - (2.75 * grid.getCellSize())) + grid.getY(), "resources/thwomp40.png");
 
         //set random color
 
-        Color[] colors = {
-                Color.BLACK,
-                Color.DARK_GRAY,
-                Color.RED,
-                Color.PINK,
-                Color.ORANGE
+        String[] sprites = {
+                "resources/thwomp40.png",
+                "resources/",
+                "resources/",
+                "resources/",
+                "resources/"
         };
-        int randomColor = (int) (Math.random() * colors.length);
-        obstacle.setColor(colors[randomColor]);
+        //int randomColor = (int) (Math.random() * colors.length);
+        //obstacle.setColor(colors[randomColor]);
 
         show();
 
@@ -42,9 +45,14 @@ public class Block {  // class with the characteristics of the running blocks
     }
 
     public void show(){
-        obstacle.fill();
+        //obstacle.fill();
+        sprite.draw();
         onScreen = true;
 
+    }
+
+    public Picture getSprite() {
+        return sprite;
     }
 
     public void move() {
@@ -52,27 +60,25 @@ public class Block {  // class with the characteristics of the running blocks
     }
 
     public int getX(){
-        return obstacle.getX();
+        return sprite.getX();
     }
 
     public int getY(){
-        return obstacle.getY();
+        return sprite.getY();
     }
 
     public int getHeight(){
-        return obstacle.getHeight();
+        return sprite.getHeight();
     }
 
     public int getWidth(){
-        return obstacle.getWidth();
+        return sprite.getWidth();
     }
 
-    public void setOnScreen(boolean onScreen) {
-        this.onScreen = onScreen;
-    }
+
 
     public boolean isOnScreen(){
-        if (obstacle.getX()+obstacle.getWidth() < 0 ) {
+        if (sprite.getX() + sprite.getWidth() < 0 ) {
             return false;
         }
         return true;
