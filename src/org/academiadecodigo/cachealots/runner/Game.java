@@ -50,7 +50,7 @@ public class Game {
         rectangleHideRight = new Rectangle(grid.getWidth()+ grid.PADDING,0,grid.PADDING*5, grid.getHeight());
         rectangleHideRight.setColor(Color.WHITE);
 
-        character = new Character(CharacterType.ALEX, grid);
+        character = new Character(CharacterType.MARIO, grid);
 
         movement = new Movement(grid, character);
         handler = new RunnerKeyboardHandler(grid, this);
@@ -58,7 +58,7 @@ public class Game {
         keyboard = new Keyboard(handler);
         keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
 
-        gameOver1 = new Picture(grid.CELL_SIZE * 7, grid.CELL_SIZE * 1.5, "resources/gameover1.png");
+        gameOver1 = new Picture(grid.CELL_SIZE * 2, grid.CELL_SIZE * 1.5, "resources/willzim.png");
         gameOver2 = new Picture(grid.CELL_SIZE * 5, grid.CELL_SIZE * 1.5, "resources/gameover2.png");
 
 
@@ -102,8 +102,11 @@ public class Game {
 
 
         }
+        gameOver1.draw();
         gameOver2.draw();
         System.out.println("Game Over");
+
+
 
     }
 
@@ -123,9 +126,9 @@ public class Game {
     private void collisionDetector() throws InterruptedException {
 
 
-
         for (int Xcharacter = character.getSprite().getX(); Xcharacter < (character.getSprite().getX() + character.getSprite().getWidth()); Xcharacter++){
             for (int Ycharacter = character.getSprite().getY(); Ycharacter < (character.getSprite().getY() + character.getSprite().getHeight()); Ycharacter++){
+
 
                 for (Iterator<Block> it = factory.iterator(); it.hasNext(); ) {
                     Block block = it.next();
@@ -143,6 +146,8 @@ public class Game {
         }
     }
 
-
+    public boolean isRunning() {
+        return running;
+    }
 }
 

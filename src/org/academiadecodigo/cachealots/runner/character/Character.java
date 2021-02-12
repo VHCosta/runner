@@ -29,7 +29,7 @@ public class Character {
         movement = new Movement(grid, this);
         currentDirection = Direction.NONE;
 
-        sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), characterType.getSource());
+        sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.8 * grid.getCellSize())) + grid.getY(), characterType.getSource());
         initialPos = getSprite().getY();
     }
 
