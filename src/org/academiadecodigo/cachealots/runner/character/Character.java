@@ -14,7 +14,7 @@ public class Character {
     private Direction currentDirection;
 
     private boolean jumping;
-    private boolean crashed;
+    private boolean singleJump = true;
 
     private int initialPos;
 
@@ -36,25 +36,31 @@ public class Character {
 
     public void moveFlow(){
 
-        if(jumping) {
-            currentDirection = Direction.UP;
-        }
-        if(sprite.getY() <= JUMP_HEIGHT) {
-            if(sprite.getY() == FLOOR_HEIGHT){
-                currentDirection = Direction.NONE;
+
+        if(singleJump) {
+            if (jumping) {
+                currentDirection = Direction.UP;
+                System.out.println("far 1");
             }
-            else {
-                currentDirection = Direction.DOWN;
-                jumping = false;
+            if (sprite.getY() <= JUMP_HEIGHT) {
+                System.out.println("far 2");
+                if (sprite.getY() == FLOOR_HEIGHT) {
+                    System.out.println("far 3");
+                    currentDirection = Direction.NONE;
+                } else {
+                    System.out.println("far 4");
+                    currentDirection = Direction.DOWN;
+                    jumping = false;
+                    singleJump = false;
+                }
             }
         }
 
         movement.move(currentDirection);
     }
 
-
-    public boolean isCrashed() {
-        return crashed;
+    public boolean isSingleJump() {
+        return singleJump;
     }
 
     public boolean isJumping() {
@@ -65,12 +71,12 @@ public class Character {
         this.jumping = jumping;
     }
 
-    public void setCrashed(boolean crashed) {
-        this.crashed = crashed;
-    }
-
     public Movement getMovement() {
         return movement;
+    }
+
+    public void setSingleJump(boolean singleJump) {
+        this.singleJump = singleJump;
     }
 
     public Picture getSprite() {

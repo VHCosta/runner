@@ -51,10 +51,7 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
                         e.printStackTrace();
                     }
                 }
-                // movement.jumping(movement.reachTheTop, game.characterShape);
                 break;
-
-
         }
     }
 
@@ -62,8 +59,5 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
     }
-/*
-    public void setRectangle(Rectangle rectangle) {
-        this.rectangle = rectangle;
-    }*/
+
 }//end of RunnerKeyboardHandler class

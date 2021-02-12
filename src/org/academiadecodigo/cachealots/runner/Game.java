@@ -47,8 +47,6 @@ public class Game {
 
         rectangleHideLeft = new Rectangle(0,0,grid.PADDING, grid.getHeight()+ grid.PADDING);
         rectangleHideLeft.setColor(Color.WHITE);
-        rectangleHideRight = new Rectangle(grid.getWidth()+ grid.PADDING,0,grid.PADDING*5, grid.getHeight());
-        rectangleHideRight.setColor(Color.WHITE);
 
         character = new Character(CharacterType.MARIO, grid);
 
@@ -75,18 +73,18 @@ public class Game {
         while(true) {
 
             //Game Clock for all movements
-            Thread.sleep(20);
+            Thread.sleep(30);
             timer++;
 
             // Update screen draws
             grid.init();
             character.getSprite().draw();
-            rectangleHideRight.fill();
+           //  rectangleHideRight.fill();
 
             //Create obstacle blocks every x loops
-            int x = (int) (Math.random() * 10) + 90;
+            int x = (Math.ceil(Math.random() * 10);
 
-            if(timer % 50 == 0){
+            if(timer % x== 0){
                 factory.create();
             }
             rectangleHideLeft.fill();
@@ -94,9 +92,12 @@ public class Game {
             factory.removeOffscreenBlocks();
 
             //Move all
-            collisionDetector();
+            if(timer % 3 == 0) {
+                collisionDetector();
+            }
 
             if(running){
+                if(230 < character.getSprite().getY() ){ character.setSingleJump(true);}
                 moveAll();
             } else break;
 
@@ -126,13 +127,14 @@ public class Game {
     private void collisionDetector() throws InterruptedException {
 
 
-        for (int Xcharacter = character.getSprite().getX(); Xcharacter < character.getSprite().getX() + character.getSprite().getWidth(); Xcharacter++){
-            for (int Ycharacter = character.getSprite().getY(); Ycharacter < character.getSprite().getY() + character.getSprite().getHeight(); Ycharacter++){
+        for (int Xcharacter = character.getSprite().getX(); Xcharacter < (character.getSprite().getX() + character.getSprite().getWidth()); Xcharacter++){
+            for (int Ycharacter = character.getSprite().getY(); Ycharacter < (character.getSprite().getY() + character.getSprite().getHeight()); Ycharacter++){
 
                 for (Iterator<Block> it = factory.iterator(); it.hasNext(); ) {
                     Block block = it.next();
-                    for (int Xblock = block.getX(); Xblock<block.getX() + block.getWidth(); Xblock++){
-                        for (int Yblock = block.getY(); Yblock<block.getY() + block.getHeight(); Yblock++){
+
+                    for (int Xblock = block.getX(); Xblock < (block.getX() + block.getWidth()); Xblock++){
+                        for (int Yblock = block.getY(); Yblock < (block.getY() + block.getHeight()); Yblock++){
                             if (Xcharacter == Xblock && Ycharacter == Yblock) {
                                 //Game.end(true);
                                 running = false;
