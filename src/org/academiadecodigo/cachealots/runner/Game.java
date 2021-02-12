@@ -11,6 +11,7 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import javax.swing.*;
 import java.util.Iterator;
@@ -32,7 +33,11 @@ public class Game {
     public BlockFactory factory;
     public Character character;
 
-    public boolean running;
+    private boolean running;
+
+    private Picture gameOver1;
+    private Picture gameOver2;
+    private Picture gameOver3;
 
 
     public void init(){
@@ -52,6 +57,11 @@ public class Game {
         handler.setMovement(movement);
         keyboard = new Keyboard(handler);
         keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
+
+        gameOver1 = new Picture(grid.CELL_SIZE * 7, grid.CELL_SIZE * 1.5, "resources/gameover1.png");
+        gameOver2 = new Picture(grid.CELL_SIZE * 5, grid.CELL_SIZE * 1.5, "resources/gameover2.png");
+
+
 
     /* iniciar a lista de blocos attacker que vai ser a mesma
     de todos os niveis com veloc dif
@@ -92,7 +102,9 @@ public class Game {
 
 
         }
+        gameOver2.draw();
         System.out.println("Game Over");
+
     }
 
     public void moveAll(){
@@ -109,15 +121,18 @@ public class Game {
     }
 
     private void collisionDetector() throws InterruptedException {
-        for (int icharacter = character.getSprite().getX(); icharacter<character.getSprite().getX() + character.getSprite().getWidth(); icharacter++){
-            for (int jcharacter = character.getSprite().getY(); jcharacter<character.getSprite().getY() + character.getSprite().getHeight(); jcharacter++){
+
+
+
+        for (int Xcharacter = character.getSprite().getX(); Xcharacter<character.getSprite().getX() + character.getSprite().getWidth(); Xcharacter++){
+            for (int Ycharacter = character.getSprite().getY(); Ycharacter<character.getSprite().getY() + character.getSprite().getHeight(); Ycharacter++){
 
                 for (Iterator<Block> it = factory.iterator(); it.hasNext(); ) {
                     Block block = it.next();
 
-                    for (int iblock = block.getX(); iblock<block.getX() + block.getWidth(); iblock++){
-                        for (int jblock = block.getY(); jblock<block.getY() + block.getHeight(); jblock++){
-                            if (icharacter == iblock && jcharacter == jblock) {
+                    for (int Xblock = block.getX(); Xblock<block.getX() + block.getWidth(); Xblock++){
+                        for (int Yblock = block.getY(); Yblock<block.getY() + block.getHeight(); Yblock++){
+                            if (Xcharacter == Xblock && Ycharacter == Yblock) {
                                 //Game.end(true);
                                 running = false;
                             }
