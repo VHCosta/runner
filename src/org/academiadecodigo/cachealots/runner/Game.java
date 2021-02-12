@@ -104,33 +104,3 @@ public class Game {
 
     }
 }
-/*
-*private void comparadorCrashes(){   comparador jog dos carros
-
-
-        for(int x = 0; x < cars.length; x++){
-        int rolX; int colX; int colY; int rolY;
-
-            rolX = cars[x].getPos().getRow();
-            colX = cars[x].getPos().getCol();
-
-            for(int y = 0; y < cars.length; y++){
-                if(cars[x].equals(cars[y])){
-                    continue;
-                }
-                rolY = cars[y].getPos().getRow();
-                colY = cars[y].getPos().getCol();
-
-                if(rolX == rolY && colX == colY){
-                    cars[x].setCrashed(true);
-                    cars[y].setCrashed(true);
-                }
-=======
-   // public void gravityJump(){
-     //   final int GRAVITY = 10;
-       // grid.CELL_SIZE * GRAVITY * Time * Time /2;
-    //}
-
-
-
- */
