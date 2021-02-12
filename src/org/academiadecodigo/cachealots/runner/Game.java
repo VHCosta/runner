@@ -6,6 +6,9 @@ import org.academiadecodigo.cachealots.runner.blocks.Block;
 import org.academiadecodigo.cachealots.runner.blocks.BlockFactory;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Movement;
+import org.academiadecodigo.cachealots.runner.movingGFX.CloudBackground;
+import org.academiadecodigo.cachealots.runner.movingGFX.CloudBackgroundFactory;
+import org.academiadecodigo.cachealots.runner.movingGFX.CloudFactory;
 import org.academiadecodigo.cachealots.runner.movingGFX.MovingGround;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
@@ -31,7 +34,9 @@ public class Game {
     private Movement movement;
     private MovingGround ground;
 
-    public BlockFactory factory;
+    private BlockFactory blockFactory;
+    private CloudBackgroundFactory cloudBackgroundFactory;
+    private CloudFactory cloudFactory;
 
 
     private Picture gameOver1;
@@ -44,8 +49,9 @@ public class Game {
         grid = new Grid();
         ground = new MovingGround(grid);
 
-        factory = new BlockFactory();
-
+        blockFactory = new BlockFactory();
+        cloudBackgroundFactory = new CloudBackgroundFactory();
+        cloudFactory = new CloudFactory();
 
         rectangleHideLeft = new Rectangle(0, 0, grid.PADDING, grid.getHeight() + grid.PADDING);
         rectangleHideLeft.setColor(Color.WHITE);
@@ -70,8 +76,11 @@ public class Game {
 
     public void start() throws InterruptedException {
         running = true;
-            grid.init();
-            character.getSprite().draw();
+        grid.init();
+        cloudBackgroundFactory.create();
+        character.getSprite().draw();
+        ground.drawGround();
+
 
         while(true) {
 
@@ -79,17 +88,22 @@ public class Game {
             Thread.sleep(30);
             timer++;
 
+
+
+            if(timer % 2 == 0) ground.drawGround();
+
             // Update screen draws
 
 
             //Create obstacle blocks every x loops
-            int x = (int) (Math.random() * 10) + 90;
-            if(timer % 50 == 0){
-                factory.create();
+            int x = (int) (Math.ceil(Math.random() * 3) * 45);
+            if(timer % x == 0){
+                blockFactory.create();
             }
 
+
             rectangleHideLeft.fill();
-            factory.removeOffscreenBlocks();
+            blockFactory.removeOffscreenBlocks();
 
             //Move all
             if(timer % 3 == 0) {
@@ -108,10 +122,17 @@ public class Game {
         System.out.println("Game Over");
     }
     public void moveAll(){
-        for (Iterator<Block> it = factory.iterator(); it.hasNext(); ) {
+        for (Iterator<Block> it = blockFactory.iterator(); it.hasNext(); ) {
             Block b = it.next();
             if(b.isOnScreen()){
                 b.move();
+            }
+        }
+
+        for (Iterator<CloudBackground> it = cloudBackgroundFactory.iterator(); it.hasNext();){
+            CloudBackground cb = it.next();
+            if(cb.isOnScreen()){
+                cb.move();
             }
         }
         character.moveFlow();
@@ -123,7 +144,7 @@ public class Game {
         for (int Xcharacter = character.getSprite().getX(); Xcharacter < (character.getSprite().getX() + character.getSprite().getWidth()); Xcharacter++) {
             for (int Ycharacter = character.getSprite().getY(); Ycharacter < (character.getSprite().getY() + character.getSprite().getHeight()); Ycharacter++) {
 
-                for (Iterator<Block> it = factory.iterator(); it.hasNext(); ) {
+                for (Iterator<Block> it = blockFactory.iterator(); it.hasNext(); ) {
                     Block block = it.next();
 
                     for (int Xblock = block.getX(); Xblock < (block.getX() + block.getWidth()); Xblock++) {

@@ -37,7 +37,8 @@ public class Grid {
     //-- Constructor
 
     public Grid(){
-        background = new Picture(PADDING, PADDING, "resources/backGround.png");
+        background = new Picture(PADDING, PADDING, "resources/angryimg.png");
+        System.out.println(background.getWidth() + " x " + background.getHeight());
         sky = new Rectangle(PADDING, PADDING, background.getWidth(), background.getHeight());
         outline = new Rectangle(PADDING, PADDING, background.getWidth(), background.getHeight());
 
