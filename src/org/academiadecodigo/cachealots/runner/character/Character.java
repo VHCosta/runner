@@ -10,13 +10,12 @@ public class Character {
 
     private Picture sprite;
     private Grid grid;
+    private boolean jumping;
+    private boolean singleJump;
 
     private CharacterType characterType;
     private Movement movement;
     private Direction currentDirection;
-
-    private boolean jumping;
-    private boolean descending;
 
     private int initialPos;
 
@@ -33,30 +32,35 @@ public class Character {
         currentDirection = Direction.NONE;
 
         sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), FLOOR_HEIGHT, characterType.getSource());
-        initialPos = getSprite().getY();
+        initialPos = sprite.getY();
     }
 
 
     public void moveFlow(){
-
-        if(jumping) {
-            currentDirection = Direction.UP;
-        }
-        if(sprite.getY() <= JUMP_HEIGHT) {
-            descending = true;
-            if(sprite.getY() == FLOOR_HEIGHT){
-                currentDirection = Direction.NONE;
-                descending = false;
+        if(singleJump) {
+            if (jumping) {
+                currentDirection = Direction.UP;
+                System.out.println("far 1");
             }
-            else {
-                currentDirection = Direction.DOWN;
-                jumping = false;
+            if (sprite.getY() <= JUMP_HEIGHT) {
+                System.out.println("far 2");
+                if (sprite.getY() == FLOOR_HEIGHT) {
+                    System.out.println("far 3");
+                    currentDirection = Direction.NONE;
+                } else {
+                    System.out.println("far 4");
+                    currentDirection = Direction.DOWN;
+                    jumping = false;
+                    singleJump = false;
+                }
             }
         }
-
         movement.move(currentDirection);
     }
 
+    public void setSingleJump(boolean singleJump) {
+        this.singleJump = singleJump;
+    }
 
     public boolean isJumping() {
         return jumping;
@@ -66,9 +70,6 @@ public class Character {
         this.jumping = jumping;
     }
 
-    public boolean isDescending() {
-        return descending;
-    }
 
     public Movement getMovement() {
         return movement;
