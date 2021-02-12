@@ -11,8 +11,11 @@ import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
+import org.academiadecodigo.simplegraphics.pictures.Picture;
 
+import javax.swing.*;
 import java.util.Iterator;
+
 
 
 public class Game {
@@ -28,10 +31,13 @@ public class Game {
     private Movement movement;
 
     public BlockFactory factory;
-
     public Character character;
 
-    private Rectangle testAttacker;
+    private boolean running;
+
+    private Picture gameOver1;
+    private Picture gameOver2;
+    private Picture gameOver3;
 
 
     public void init(){
@@ -44,53 +50,62 @@ public class Game {
         rectangleHideRight = new Rectangle(grid.getWidth()+ grid.PADDING,0,grid.PADDING*5, grid.getHeight());
         rectangleHideRight.setColor(Color.WHITE);
 
+        character = new Character(CharacterType.MARIO, grid);
 
-        character = new Character(CharacterType.ALEX, grid);
-
-        testAttacker = new Rectangle((grid.getWidth() - grid.getCellSize()) + grid.getPadding()*5, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
-        testAttacker.setColor(Color.BLACK);
-
-        movement = new Movement(grid, character, this);
+        movement = new Movement(grid, character);
         handler = new RunnerKeyboardHandler(grid, this);
         handler.setMovement(movement);
         keyboard = new Keyboard(handler);
         keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
+
+        gameOver1 = new Picture(grid.CELL_SIZE * 2, grid.CELL_SIZE * 1.5, "resources/willzim.png");
+        gameOver2 = new Picture(grid.CELL_SIZE * 5, grid.CELL_SIZE * 1.5, "resources/gameover2.png");
+
+
 
     /* iniciar a lista de blocos attacker que vai ser a mesma
     de todos os niveis com veloc dif
      */
     }
 
-
     public void start() throws InterruptedException {
-        double t0 = 0;
+
+        running = true;
 
         while(true) {
 
             //Game Clock for all movements
-            Thread.sleep(30);
+            Thread.sleep(20);
             timer++;
 
             // Update screen draws
             grid.init();
-            rectangleHideLeft.fill();
-            rectangleHideRight.fill();
-            //characterShape.fill();
             character.getSprite().draw();
+            rectangleHideRight.fill();
 
-            //Create obstacle blocks every 50 loops
-            if(timer % 100 == 0){
+            //Create obstacle blocks every x loops
+            int x = (int) (Math.random() * 10) + 90;
+
+            if(timer % 50 == 0){
                 factory.create();
             }
-
+            rectangleHideLeft.fill();
 
             factory.removeOffscreenBlocks();
 
-
             //Move all
-            moveAll();
+            collisionDetector();
+
+            if(running){
+                moveAll();
+            } else break;
+
 
         }
+        gameOver1.draw();
+        gameOver2.draw();
+        System.out.println("Game Over");
+
     }
 
     public void moveAll(){
@@ -101,6 +116,34 @@ public class Game {
                 b.move();
             }
         }
+        //character.getMovement().
+        character.moveFlow();
 
     }
+
+    private void collisionDetector() throws InterruptedException {
+
+
+
+        for (int Xcharacter = character.getSprite().getX(); Xcharacter<character.getSprite().getX() + character.getSprite().getWidth(); Xcharacter++){
+            for (int Ycharacter = character.getSprite().getY(); Ycharacter<character.getSprite().getY() + character.getSprite().getHeight(); Ycharacter++){
+
+                for (Iterator<Block> it = factory.iterator(); it.hasNext(); ) {
+                    Block block = it.next();
+
+                    for (int Xblock = block.getX(); Xblock<block.getX() + block.getWidth(); Xblock++){
+                        for (int Yblock = block.getY(); Yblock<block.getY() + block.getHeight(); Yblock++){
+                            if (Xcharacter == Xblock && Ycharacter == Yblock) {
+                                //Game.end(true);
+                                running = false;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 }
+

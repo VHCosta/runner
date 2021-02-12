@@ -12,7 +12,6 @@ public class BlockFactory {
     private AbstractSequentialList<Block> blockList = new LinkedList<>();
 
 
-
     public void create(){
         blockList.add(new Block(Game.grid));
     }
@@ -31,11 +30,11 @@ public class BlockFactory {
             Block block = blockList.get(i);
 
             if (!block.isOnScreen()) {
-                System.out.println(block);
+                //System.out.println(block);
                 delete(block);
-                System.out.println(block);
+                //System.out.println(block);
             }
-            System.out.println(blockList);
+            //System.out.println(blockList);
         }
     }
 

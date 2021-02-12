@@ -5,9 +5,11 @@ public enum CharacterType {
     MARI_YODA("resources/"),
     KIRBY("resources/"),
     DAME_TU_COSITA("resources/"),
-    MARIO("resources/"),
+    MARIO("resources/mariofim.png"),
     CACHE("resources/"),
-    SPIDER("resources/");
+    SPIDER("resources/"),
+    PIKA("resources/pik.jpg");
+
     private String source;
 
     CharacterType(String source){
