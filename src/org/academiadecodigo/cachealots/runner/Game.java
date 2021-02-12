@@ -82,9 +82,9 @@ public class Game {
            //  rectangleHideRight.fill();
 
             //Create obstacle blocks every x loops
-            int x = (Math.ceil(Math.random() * 10);
+            double x = (Math.ceil(Math.random()*4))*45;
 
-            if(timer % x== 0){
+            if(timer % x == 0){
                 factory.create();
             }
             rectangleHideLeft.fill();
