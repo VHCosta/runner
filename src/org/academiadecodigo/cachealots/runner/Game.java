@@ -58,8 +58,8 @@ public class Game {
         keyboard = new Keyboard(handler);
         keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
 
-        gameOver1 = new Picture(grid.CELL_SIZE * 2, grid.CELL_SIZE * 1.5, "resources/willzim.png");
-        gameOver2 = new Picture(grid.CELL_SIZE * 5, grid.CELL_SIZE * 1.5, "resources/gameover2.png");
+       // gameOver1 = new Picture(grid.CELL_SIZE * 2, grid.CELL_SIZE * 1.5, "resources/willzim.png");
+        gameOver2 = new Picture(grid.CELL_SIZE * 4.7, grid.CELL_SIZE * 1.5, "resources/gameover2.png");
 
 
 
@@ -102,7 +102,7 @@ public class Game {
 
 
         }
-        gameOver1.draw();
+        //gameOver1.draw();
         gameOver2.draw();
         System.out.println("Game Over");
 
@@ -131,7 +131,6 @@ public class Game {
 
                 for (Iterator<Block> it = factory.iterator(); it.hasNext(); ) {
                     Block block = it.next();
-
                     for (int Xblock = block.getX(); Xblock<block.getX() + block.getWidth(); Xblock++){
                         for (int Yblock = block.getY(); Yblock<block.getY() + block.getHeight(); Yblock++){
                             if (Xcharacter == Xblock && Ycharacter == Yblock) {
