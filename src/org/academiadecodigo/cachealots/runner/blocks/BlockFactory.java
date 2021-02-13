@@ -10,6 +10,7 @@ public class BlockFactory {
 
 
     private AbstractSequentialList<Block> blockList = new LinkedList<>();
+    public int blockCounter=0;
 
 
     public void create(){
@@ -32,10 +33,15 @@ public class BlockFactory {
             if (!block.isOnScreen()) {
                 //System.out.println(block);
                 delete(block);
+                blockCounter++;
                 //System.out.println(block);
             }
             //System.out.println(blockList);
         }
+    }
+
+    public int getBlockCounter() {
+        return blockCounter;
     }
 
     public Iterator<Block> iterator() {

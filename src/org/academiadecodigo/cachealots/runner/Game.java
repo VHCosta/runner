@@ -23,11 +23,15 @@ public class Game {
 
     public static Grid grid;
     public static int timer = -1;
+    public static int delay = 30;
+    public static int score = 0;
+    public static int level= 0;
+    public static int blockToLvUp = 3;
+
 
     private Keyboard keyboard;
     private RunnerKeyboardHandler handler;
     private Rectangle rectangleHideLeft;
-    private Rectangle rectangleHideRight;
     private Movement movement;
 
     public BlockFactory factory;
@@ -56,7 +60,7 @@ public class Game {
         keyboard = new Keyboard(handler);
         keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
 
-       // gameOver1 = new Picture(grid.CELL_SIZE * 2, grid.CELL_SIZE * 1.5, "resources/willzim.png");
+        gameOver1 = new Picture(grid.CELL_SIZE * 2, grid.CELL_SIZE * 1.5, "resources/willzim.png");
         gameOver2 = new Picture(grid.CELL_SIZE * 4.7, grid.CELL_SIZE * 1.5, "resources/gameover2.png");
 
 
@@ -73,13 +77,12 @@ public class Game {
         while(true) {
 
             //Game Clock for all movements
-            Thread.sleep(30);
+            Thread.sleep(delay);
             timer++;
 
             // Update screen draws
             grid.init();
             character.getSprite().draw();
-           //  rectangleHideRight.fill();
 
             //Create obstacle blocks every x loops
             double x = (Math.ceil(Math.random()*4))*45;
@@ -87,14 +90,15 @@ public class Game {
             if(timer % x == 0){
                 factory.create();
             }
-            rectangleHideLeft.fill();
 
+            rectangleHideLeft.fill();
             factory.removeOffscreenBlocks();
 
             //Move all
             if(timer % 3 == 0) {
                 collisionDetector();
             }
+            levelUp(factory.getBlockCounter());
 
             if(running){
                 if(230 < character.getSprite().getY() ){ character.setSingleJump(true);}
@@ -103,9 +107,10 @@ public class Game {
 
 
         }
-        //gameOver1.draw();
+        gameOver1.draw();
         gameOver2.draw();
         System.out.println("Game Over");
+        System.out.println("Your Score: " + factory.getBlockCounter());
 
 
 
@@ -124,7 +129,7 @@ public class Game {
 
     }
 
-    private void collisionDetector() throws InterruptedException {
+    private void collisionDetector() {
 
 
         for (int Xcharacter = character.getSprite().getX(); Xcharacter < (character.getSprite().getX() + character.getSprite().getWidth()); Xcharacter++){
@@ -149,5 +154,21 @@ public class Game {
     public boolean isRunning() {
         return running;
     }
+
+    private void levelUp(int score){
+
+
+        if(score == blockToLvUp) {
+            System.out.println("You are in level " + level);
+            level++;
+            delay -= 3;
+            blockToLvUp += 3;
+        }
+
+    }
+
+
+
 }
+
 

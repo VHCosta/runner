@@ -40,15 +40,11 @@ public class Character {
         if(singleJump) {
             if (jumping) {
                 currentDirection = Direction.UP;
-                System.out.println("far 1");
             }
             if (sprite.getY() <= JUMP_HEIGHT) {
-                System.out.println("far 2");
                 if (sprite.getY() == FLOOR_HEIGHT) {
-                    System.out.println("far 3");
                     currentDirection = Direction.NONE;
                 } else {
-                    System.out.println("far 4");
                     currentDirection = Direction.DOWN;
                     jumping = false;
                     singleJump = false;
