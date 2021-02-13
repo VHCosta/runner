@@ -16,18 +16,18 @@ public class Cloud {  // class with the characteristics of the running blocks
     public Cloud(Grid grid) {
         this.grid = grid;
         movement = new Movement(grid, this);
-        sprite = new Picture(grid.PADDING, (grid.getHeight() - (2.75 * grid.getCellSize())) + grid.getY(), "resources/clouds/cloud_bg01.png");
 
+        sprite = new Picture(grid.PADDING, grid.PADDING, "resources/clouds/single_cloud.png");
+        int heightRandom = (int) (Math.random() * 3);
+        sprite.translate(grid.getWidth()/2 - sprite.getWidth(), (double) sprite.getHeight()/heightRandom + grid.PADDING);
 
         show();
 
     }
 
     public void show(){
-        //obstacle.fill();
         sprite.draw();
         onScreen = true;
-
     }
 
     public Picture getSprite() {
@@ -35,7 +35,7 @@ public class Cloud {  // class with the characteristics of the running blocks
     }
 
     public void move() {
-        movement.moveBlock(Direction.LEFT);
+        movement.moveCloud(Direction.LEFT);
     }
 
     public int getX(){
@@ -57,10 +57,7 @@ public class Cloud {  // class with the characteristics of the running blocks
 
 
     public boolean isOnScreen(){
-        if (sprite.getX() + sprite.getWidth() < 0 ) {
-            return false;
-        }
-        return true;
+        return sprite.getX() + sprite.getWidth() >= 0;
     }
 
 

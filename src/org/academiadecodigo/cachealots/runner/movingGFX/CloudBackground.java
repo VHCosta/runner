@@ -18,8 +18,8 @@ public class CloudBackground {  // class with the characteristics of the running
     public CloudBackground(Grid grid) {
         this.grid = grid;
         movement = new Movement(grid, this);
-        sprite = new Picture(grid.PADDING, (grid.getHeight() - (2.75 * grid.getCellSize())) + grid.getY(), "resources/clouds/cloud_bg01-1920.png");
 
+        initSprite();
         cloudBackgroundFrames = new String[]{
                 "resources/clouds/cloudbg001.png",
                 "resources/clouds/cloudbg002.png",
@@ -55,6 +55,10 @@ public class CloudBackground {  // class with the characteristics of the running
 
     }
 
+    public void initSprite(){
+        sprite = new Picture(grid.PADDING, (grid.getHeight() - (2.75 * grid.getCellSize())) + grid.getY(), "resources/clouds/cloud_bg01-1920.png");
+    }
+
     public void show(){
 
         if (frameIndex == cloudBackgroundFrames.length-1) frameIndex = 0;
@@ -68,6 +72,10 @@ public class CloudBackground {  // class with the characteristics of the running
 
     public Picture getSprite() {
         return sprite;
+    }
+
+    public void resetSprite(){
+        sprite.delete();
     }
 
     public void move() {

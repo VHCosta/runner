@@ -10,36 +10,36 @@ import java.util.LinkedList;
 public class CloudFactory {
 
 
-    private AbstractSequentialList<Block> blockList = new LinkedList<>();
+    private AbstractSequentialList<Cloud> cloudList = new LinkedList<>();
 
+    public void clearCloudList() {
+        cloudList.clear();
+    }
 
     public void create(){
-        blockList.add(new Block(Game.grid));
+        cloudList.add(new Cloud(Game.grid));
     }
 
     public boolean hasNext(){
-        return blockList.iterator().hasNext();
+        return cloudList.iterator().hasNext();
     }
 
-    public void delete(Block block) {
-        blockList.remove(block);
+    public void delete(Cloud cloud) {
+        cloudList.remove(cloud);
     }
 
-    public void removeOffscreenBlocks(){
+    public void removeOffscreenClouds(){
 
-        for (int i = 0; i < blockList.size(); i++) {
-            Block block = blockList.get(i);
+        for (int i = 0; i < cloudList.size(); i++) {
+            Cloud cloud = cloudList.get(i);
 
-            if (!block.isOnScreen()) {
-                //System.out.println(block);
-                delete(block);
-                //System.out.println(block);
+            if (!cloud.isOnScreen()) {
+                delete(cloud);
             }
-            //System.out.println(blockList);
         }
     }
 
-    public Iterator<Block> iterator() {
-        return blockList.listIterator();
+    public Iterator<Cloud> iterator() {
+        return cloudList.listIterator();
     }
 }

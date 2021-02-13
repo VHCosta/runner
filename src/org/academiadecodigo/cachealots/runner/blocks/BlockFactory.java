@@ -11,9 +11,18 @@ public class BlockFactory {
 
     private AbstractSequentialList<Block> blockList = new LinkedList<>();
 
+    public void clearBlockList(){
+        blockList.clear();
+    }
 
     public void create(){
         blockList.add(new Block(Game.grid));
+    }
+
+    private int pastBlocks;
+
+    public int getPastBlocks(){ //é invocado no Game
+          return pastBlocks;
     }
 
     public boolean hasNext(){
@@ -30,11 +39,9 @@ public class BlockFactory {
             Block block = blockList.get(i);
 
             if (!block.isOnScreen()) {
-                //System.out.println(block);
                 delete(block);
-                //System.out.println(block);
+                pastBlocks++;
             }
-            //System.out.println(blockList);
         }
     }
 

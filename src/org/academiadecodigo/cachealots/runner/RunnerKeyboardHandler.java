@@ -10,13 +10,11 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
 
     private Grid grid;
     private Movement movement;
-    private Character character;
     private Game game;
 
 
-    public RunnerKeyboardHandler(Grid grid, Character character, Game game){
+    public RunnerKeyboardHandler(Grid grid, Game game){
         this.grid = grid;
-        this.character = character;
         this.game = game;
     }
 
@@ -39,16 +37,16 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
             case KeyboardEvent.KEY_DOWN:
                 movement.moveDown(1);
                 break;
+
             case KeyboardEvent.KEY_SPACE:
-                if(game.isRunning()){
-                    game.character.setJumping(true);
-                } else {
+                if (!game.isRunning()) {
                     try {
-                        game.init();
-                        game.start();
+                        game.reset();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    game.character.setJumping(true);
                 }
                 break;
         }

@@ -46,6 +46,10 @@ public class Movement {
         block.getSprite().translate(-5, 0);
     }
 
+    public void moveCloud(Direction dir) {
+        cloud.getSprite().translate(-2, 0);
+    }
+
     public void moveCloudBackground(Direction dir) {
         cloudBackground.getSprite().translate(-1, 0);
     }

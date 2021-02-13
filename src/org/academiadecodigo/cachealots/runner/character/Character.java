@@ -31,7 +31,7 @@ public class Character {
         movement = new Movement(grid, this);
         currentDirection = Direction.NONE;
 
-        sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), FLOOR_HEIGHT, characterType.getSource());
+        resetSprite();
         initialPos = sprite.getY();
     }
 
@@ -70,6 +70,9 @@ public class Character {
         this.jumping = jumping;
     }
 
+    public void resetSprite(){
+        sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), FLOOR_HEIGHT, characterType.getSource());
+    }
 
     public Movement getMovement() {
         return movement;
