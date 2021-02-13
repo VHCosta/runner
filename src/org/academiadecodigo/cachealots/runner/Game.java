@@ -34,8 +34,8 @@ public class Game {
     private Movement movement;
     private MovingGround ground;
 
+    private CloudBackground cloudBackground;
     private BlockFactory blockFactory;
-    private CloudBackgroundFactory cloudBackgroundFactory;
     private CloudFactory cloudFactory;
 
 
@@ -47,10 +47,11 @@ public class Game {
     public void init() {
 
         grid = new Grid();
+        grid.init();
         ground = new MovingGround(grid);
 
         blockFactory = new BlockFactory();
-        cloudBackgroundFactory = new CloudBackgroundFactory();
+        cloudBackground = new CloudBackground(grid);
         cloudFactory = new CloudFactory();
 
         rectangleHideLeft = new Rectangle(0, 0, grid.PADDING, grid.getHeight() + grid.PADDING);
@@ -76,13 +77,12 @@ public class Game {
 
     public void start() throws InterruptedException {
         running = true;
-        grid.init();
-        cloudBackgroundFactory.create();
-        character.getSprite().draw();
+        cloudBackground.show();
         ground.drawGround();
 
 
         while(true) {
+
 
             //Game Clock for all movements
             Thread.sleep(30);
@@ -90,7 +90,9 @@ public class Game {
 
 
 
+            if(timer % 8 == 0) cloudBackground.show();
             if(timer % 2 == 0) ground.drawGround();
+            character.getSprite().draw();
 
             // Update screen draws
 
@@ -129,12 +131,12 @@ public class Game {
             }
         }
 
-        for (Iterator<CloudBackground> it = cloudBackgroundFactory.iterator(); it.hasNext();){
+        /*for (Iterator<CloudBackground> it = cloudBackgroundFactory.iterator(); it.hasNext();){
             CloudBackground cb = it.next();
             if(cb.isOnScreen()){
                 cb.move();
             }
-        }
+        }*/
         character.moveFlow();
     }
 
