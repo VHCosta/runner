@@ -6,7 +6,6 @@ public class GameExecutable {
 
         Game runner = new Game();
 
-        runner.init();
         runner.start();
 
 

@@ -6,6 +6,7 @@ import org.academiadecodigo.cachealots.runner.blocks.Block;
 import org.academiadecodigo.cachealots.runner.blocks.BlockFactory;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Movement;
+import org.academiadecodigo.cachealots.runner.movingGFX.*;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
@@ -13,13 +14,9 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
-import javax.swing.*;
 import java.util.Iterator;
 
-
-
 public class Game {
-
 
     public static Grid grid;
     public static int timer = -1;
@@ -28,118 +25,165 @@ public class Game {
     public static int level= 0;
     public static int blockToLvUp = 3;
 
+    private boolean running;
+    public Character character;
 
     private Keyboard keyboard;
     private RunnerKeyboardHandler handler;
+
     private Rectangle rectangleHideLeft;
     private Movement movement;
+    private MovingGround ground;
 
-    public BlockFactory factory;
-    public Character character;
+    private CloudBackground cloudBackground;
 
-    private boolean running;
+    private CloudFactory cloudFactory;
+    private BlockFactory blockFactory;
+
 
     private Picture gameOver1;
     private Picture gameOver2;
     private Picture gameOver3;
+    private Picture levelUpPicture;
+    private Picture gameOverlogo;
 
-
-    public void init(){
+    public void initTools() {
 
         grid = new Grid();
-        factory = new BlockFactory();
-
-        rectangleHideLeft = new Rectangle(0,0,grid.PADDING, grid.getHeight()+ grid.PADDING);
-        rectangleHideLeft.setColor(Color.WHITE);
-
-        character = new Character(CharacterType.MARIO, grid);
+        grid.init();
 
         movement = new Movement(grid, character);
-        handler = new RunnerKeyboardHandler(grid, this);
+        handler = new RunnerKeyboardHandler(grid,this);
         handler.setMovement(movement);
         keyboard = new Keyboard(handler);
         keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
 
+    }
+
+    public void init() {
+
+        character = new Character(CharacterType.MARIO, grid);
+
+        cloudBackground = new CloudBackground(grid);
+        cloudFactory = new CloudFactory();
+        blockFactory = new BlockFactory();
+        ground = new MovingGround(grid);
+
+        rectangleHideLeft = new Rectangle(0, 0, grid.PADDING, grid.getHeight() + grid.PADDING);
+        rectangleHideLeft.setColor(Color.WHITE);
+
         gameOver1 = new Picture(grid.CELL_SIZE * 2, grid.CELL_SIZE * 1.5, "resources/willzim.png");
         gameOver2 = new Picture(grid.CELL_SIZE * 4.7, grid.CELL_SIZE * 1.5, "resources/gameover2.png");
 
+        levelUpPicture = new Picture(grid.CELL_SIZE * 11, grid.CELL_SIZE * 2, "resources/pik.jpg");
 
+    }
 
-    /* iniciar a lista de blocos attacker que vai ser a mesma
-    de todos os niveis com veloc dif
-     */
+    public boolean isRunning() {
+        return running;
     }
 
     public void start() throws InterruptedException {
-
         running = true;
+        initTools();
+        init();
+        cloudBackground.show();
+        ground.drawGround();
 
-        while(true) {
+        while (true) {
 
             //Game Clock for all movements
             Thread.sleep(delay);
             timer++;
 
-            // Update screen draws
-            grid.init();
+            if (timer % 8 == 0) cloudBackground.show();
+            if (timer % 2 == 0) ground.drawGround();
             character.getSprite().draw();
 
             //Create obstacle blocks every x loops
-            double x = (Math.ceil(Math.random()*4))*45;
+            double x = (Math.ceil(Math.random() * 4)) * 45;
 
-            if(timer % x == 0){
-                factory.create();
+            if (timer % x == 0) {
+                blockFactory.create();
             }
 
             rectangleHideLeft.fill();
-            factory.removeOffscreenBlocks();
+            blockFactory.removeOffscreenBlocks();
 
             //Move all
-            if(timer % 3 == 0) {
+            if (timer % 3 == 0) {
                 collisionDetector();
             }
-            levelUp(factory.getBlockCounter());
 
-            if(running){
-                if(230 < character.getSprite().getY() ){ character.setSingleJump(true);}
+            levelUp(blockFactory.getBlockCounter());
+
+            int blockRNG = (int) (Math.ceil(Math.random() * 3) * 45);
+
+            if (running) {
+                if (230 < character.getSprite().getY()) character.setSingleJump(true);
                 moveAll();
             } else break;
-
-
         }
-        gameOver1.draw();
+
         gameOver2.draw();
         System.out.println("Game Over");
-        System.out.println("Your Score: " + factory.getBlockCounter());
+        System.out.println("Your Score: " + blockFactory.getBlockCounter());
+    }
+
+    public void reset() throws InterruptedException {
+        gameOver2.delete();
+
+        Thread.sleep(20);
+        System.out.println("reset clouds");
+        Iterator<Cloud> itClouds = cloudFactory.iterator();
+        while (itClouds.hasNext()) itClouds.next().getSprite().delete();
+        cloudFactory.clearCloudList();
 
 
+        Thread.sleep(20);
+        System.out.println("reset blocks");
+        Iterator<Block> itBlocks = blockFactory.iterator();
+        while (itBlocks.hasNext()) itBlocks.next().getSprite().delete();
+        blockFactory.clearBlockList();
+
+        Thread.sleep(20);
+        System.out.println("reset cloud bg");
+        cloudBackground.resetSprite();
+        cloudBackground.initSprite();
+
+        Thread.sleep(20);
+        System.out.println("reset char sprite");
+        character.getSprite().delete();
+        character.resetSprite();
+
+
+        Thread.sleep(20);
+        System.out.println("reset gameOver picture");
+        init();
+        start();
 
     }
 
     public void moveAll(){
-
-        for (Iterator<Block> it = factory.iterator(); it.hasNext(); ) {
+        Iterator<Block> it = blockFactory.iterator();
+        while (it.hasNext()) {
             Block b = it.next();
-            if(b.isOnScreen()){
-                b.move();
-            }
+            if(b.isOnScreen()) b.move();
         }
-        //character.getMovement().
         character.moveFlow();
-
     }
 
     private void collisionDetector() {
 
 
-        for (int Xcharacter = character.getSprite().getX(); Xcharacter < (character.getSprite().getX() + character.getSprite().getWidth()); Xcharacter++){
-            for (int Ycharacter = character.getSprite().getY(); Ycharacter < (character.getSprite().getY() + character.getSprite().getHeight()); Ycharacter++){
+        for (int Xcharacter = character.getSprite().getX(); Xcharacter < (character.getSprite().getX() + character.getSprite().getWidth()); Xcharacter++) {
+            for (int Ycharacter = character.getSprite().getY(); Ycharacter < (character.getSprite().getY() + character.getSprite().getHeight()); Ycharacter++) {
 
-                for (Iterator<Block> it = factory.iterator(); it.hasNext(); ) {
+                for (Iterator<Block> it = blockFactory.iterator(); it.hasNext(); ) {
                     Block block = it.next();
 
-                    for (int Xblock = block.getX(); Xblock < (block.getX() + block.getWidth()); Xblock++){
-                        for (int Yblock = block.getY(); Yblock < (block.getY() + block.getHeight()); Yblock++){
+                    for (int Xblock = block.getX(); Xblock < (block.getX() + block.getWidth()); Xblock++) {
+                        for (int Yblock = block.getY(); Yblock < (block.getY() + block.getHeight()); Yblock++) {
                             if (Xcharacter == Xblock && Ycharacter == Yblock) {
                                 //Game.end(true);
                                 running = false;
@@ -151,24 +195,20 @@ public class Game {
         }
     }
 
-    public boolean isRunning() {
-        return running;
-    }
-
-    private void levelUp(int score){
-
-
-        if(score == blockToLvUp) {
+    private void levelUp(int score) throws InterruptedException {
+        if(score == blockToLvUp ) {
             System.out.println("You are in level " + level);
             level++;
-            delay -= 3;
-            blockToLvUp += 3;
+            delay -= 2;
+            blockToLvUp += 7;
+            if(blockToLvUp > 8) {
+                levelUpPicture.draw();
+                Thread.sleep(700);
+                levelUpPicture.delete();
+            }
         }
-
     }
 
-
-
+    
+    
 }
-
-

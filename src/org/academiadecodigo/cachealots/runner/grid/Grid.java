@@ -1,5 +1,6 @@
 package org.academiadecodigo.cachealots.runner.grid;
 
+import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
@@ -8,51 +9,38 @@ public class Grid {
     //State
 
 
+
     //-- Constants
 
     public final int PADDING = 10;
     public final int CELL_SIZE = 30;
-
+    public final int GROUND_X = PADDING;
+    public final int GROUND_Y = 9 * CELL_SIZE;
 
     //-- Properties
 
-    private int cols;
-    private int rows;
-    private Rectangle rectangle;
-
-    Picture backGround;
-
+    private Rectangle outline;
+    private Picture background;
 
     //Behavior
-
     //-- Constructor
 
     public Grid(){
-        backGround = new Picture(PADDING, PADDING, "resources/backGround.png");
-        rectangle = new Rectangle(PADDING, PADDING, backGround.getWidth(), backGround.getHeight());
+        background = new Picture(PADDING, PADDING, "resources/angryimg.png");
+        outline = new Rectangle(PADDING, PADDING, background.getWidth(), background.getHeight());
+        outline.setColor(Color.LIGHT_GRAY);
     }
-
 
     //-- Main game methods
 
     //-- Initialize: show grid on the screen
     public void init(){
-        backGround.draw();
-        rectangle.draw();
+        background.draw();
+        outline.draw();
     }
-
-
 
 
     //-- Getters
-
-    public int getCols() {
-        return cols;
-    }
-
-    public int getRows() {
-        return rows;
-    }
 
     public int getCellSize() {
         return CELL_SIZE;
@@ -67,22 +55,22 @@ public class Grid {
     //--- X & Y
 
     public int getX(){
-        return rectangle.getX() + PADDING;
+        return outline.getX() + PADDING;
     }
 
     public int getY(){
-        return rectangle.getY() + PADDING;
+        return outline.getY() + PADDING;
     }
 
 
     //--- Width & Height
 
     public int getWidth(){
-        return rectangle.getWidth();
+        return outline.getWidth();
     }
 
     public int getHeight(){
-        return rectangle.getHeight();
+        return outline.getHeight();
     }
 
 

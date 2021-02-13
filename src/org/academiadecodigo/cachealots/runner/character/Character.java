@@ -1,15 +1,17 @@
 package org.academiadecodigo.cachealots.runner.character;
+
 import org.academiadecodigo.cachealots.runner.grid.Direction;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Movement;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
+
+
 public class Character {
 
-    // class with the characteristics of the running blocks
     private Picture sprite;
-    private CharacterType characterType;
     private Grid grid;
 
+    private CharacterType characterType;
     private Movement movement;
     private Direction currentDirection;
 
@@ -18,8 +20,9 @@ public class Character {
 
     private int initialPos;
 
+
     public final int JUMP_HEIGHT = 150;
-    public final int FLOOR_HEIGHT = 246;
+    public final int FLOOR_HEIGHT = 235;
 
 
     public Character(CharacterType characterType, Grid grid){
@@ -29,13 +32,12 @@ public class Character {
         movement = new Movement(grid, this);
         currentDirection = Direction.NONE;
 
-        sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), (grid.getHeight() - (2.8 * grid.getCellSize())) + grid.getY(), characterType.getSource());
-        initialPos = getSprite().getY();
+        resetSprite();
+        initialPos = sprite.getY();
     }
 
 
     public void moveFlow(){
-
 
         if(singleJump) {
             if (jumping) {
@@ -51,7 +53,6 @@ public class Character {
                 }
             }
         }
-
         movement.move(currentDirection);
     }
 
@@ -67,12 +68,12 @@ public class Character {
         this.jumping = jumping;
     }
 
-    public Movement getMovement() {
-        return movement;
+    public void resetSprite(){
+        sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), FLOOR_HEIGHT, characterType.getSource());
     }
 
-    public void setSingleJump(boolean singleJump) {
-        this.singleJump = singleJump;
+    public Movement getMovement() {
+        return movement;
     }
 
     public Picture getSprite() {
@@ -81,5 +82,9 @@ public class Character {
 
     public int getInitialPos() {
         return initialPos;
+    }
+
+    public void setSingleJump(boolean b) {
+        singleJump = b;
     }
 }

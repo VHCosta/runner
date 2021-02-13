@@ -11,7 +11,6 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class Block {  // class with the characteristics of the running blocks
 
-    private Rectangle obstacle;
     private Grid grid;
     public boolean onScreen;
     private Movement movement;
@@ -20,11 +19,7 @@ public class Block {  // class with the characteristics of the running blocks
     public Block(Grid grid) {
         this.grid = grid;
         movement = new Movement(grid, this);
-        //obstacle = new Rectangle(grid.getWidth() - 20, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
-
         sprite = new Picture(grid.getWidth() - 20, (grid.getHeight() - (2.75 * grid.getCellSize())) + grid.getY(), "resources/thwomp40.png");
-
-        //set random color
 
         String[] sprites = {
                 "resources/thwomp40.png",
@@ -35,13 +30,8 @@ public class Block {  // class with the characteristics of the running blocks
         };
         //int randomColor = (int) (Math.random() * colors.length);
         //obstacle.setColor(colors[randomColor]);
-
         show();
 
-    }
-
-    public Rectangle getObstacle() {
-        return obstacle;
     }
 
     public void show(){
@@ -57,7 +47,6 @@ public class Block {  // class with the characteristics of the running blocks
 
     public void move() {
         movement.moveBlock(Direction.LEFT);
-        //obstacle.translate(-grid.CELL_SIZE / grid.PADDING, 0);
     }
 
     public int getX(){
