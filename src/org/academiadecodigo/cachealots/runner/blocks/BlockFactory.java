@@ -12,10 +12,14 @@ public class BlockFactory {
     private AbstractSequentialList<Block> blockList = new LinkedList<>();
     public int blockCounter=0;
 
+    public void clearBlockList(){
+        blockList.clear();
+    }
 
     public void create(){
         blockList.add(new Block(Game.grid));
     }
+
 
     public boolean hasNext(){
         return blockList.iterator().hasNext();
@@ -31,12 +35,9 @@ public class BlockFactory {
             Block block = blockList.get(i);
 
             if (!block.isOnScreen()) {
-                //System.out.println(block);
                 delete(block);
                 blockCounter++;
-                //System.out.println(block);
             }
-            //System.out.println(blockList);
         }
     }
 

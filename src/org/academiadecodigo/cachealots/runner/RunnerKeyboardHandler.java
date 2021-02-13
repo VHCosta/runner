@@ -1,23 +1,22 @@
 package org.academiadecodigo.cachealots.runner;
 
+import org.academiadecodigo.cachealots.runner.character.Character;
 import org.academiadecodigo.cachealots.runner.grid.Grid;
 import org.academiadecodigo.cachealots.runner.grid.Movement;
-import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
-import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 public class RunnerKeyboardHandler implements KeyboardHandler {
 
+    private Grid grid;
     private Movement movement;
     private Game game;
 
 
     public RunnerKeyboardHandler(Grid grid, Game game){
+        this.grid = grid;
         this.game = game;
-
     }
-
 
     public void setMovement(Movement movement) {
         this.movement = movement;
@@ -39,17 +38,15 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
                 movement.moveDown(1);
                 break;
 
-
             case KeyboardEvent.KEY_SPACE:
-                if(game.isRunning()){
-                    game.character.setJumping(true);
-                } else {
+                if (!game.isRunning()) {
                     try {
-                        game.init();
-                        game.start();
+                        game.reset();
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                } else {
+                    game.character.setJumping(true);
                 }
                 break;
         }
@@ -59,5 +56,4 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
     public void keyReleased(KeyboardEvent keyboardEvent) {
 
     }
-
 }//end of RunnerKeyboardHandler class
