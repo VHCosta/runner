@@ -122,12 +122,15 @@ public class Game {
             if (running) {
                 if (230 < character.getSprite().getY()) character.setSingleJump(true);
                 moveAll();
-            } else break;
+            } else {
+                gameOver2.draw();
+                System.out.println("Game Over");
+                System.out.println("Your Score: " + blockFactory.getBlockCounter());
+            }
+
         }
 
-        gameOver2.draw();
-        System.out.println("Game Over");
-        System.out.println("Your Score: " + blockFactory.getBlockCounter());
+
     }
 
     public void reset() throws InterruptedException {
