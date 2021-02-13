@@ -25,8 +25,8 @@ public class Game {
     public static int timer = -1;
     public static int delay = 30;
     public static int score = 0;
-    public static int level= 0;
-    public static int blockToLvUp = 3;
+    public static int level= 1;
+    public static int blockToLvUp = 0;
 
 
     private Keyboard keyboard;
@@ -39,14 +39,15 @@ public class Game {
 
     private boolean running;
 
-    private Picture gameOver1;
-    private Picture gameOver2;
+    private Picture levelUpPicture;
+    private Picture gameOverlogo;
     private Picture gameOver3;
 
 
     public void init(){
 
         grid = new Grid();
+
         factory = new BlockFactory();
 
         rectangleHideLeft = new Rectangle(0,0,grid.PADDING, grid.getHeight()+ grid.PADDING);
@@ -60,8 +61,8 @@ public class Game {
         keyboard = new Keyboard(handler);
         keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
 
-        gameOver1 = new Picture(grid.CELL_SIZE * 2, grid.CELL_SIZE * 1.5, "resources/willzim.png");
-        gameOver2 = new Picture(grid.CELL_SIZE * 4.7, grid.CELL_SIZE * 1.5, "resources/gameover2.png");
+        levelUpPicture = new Picture(grid.CELL_SIZE * 11, grid.CELL_SIZE * 2, "resources/pikachu-meme.png");
+        gameOverlogo = new Picture(grid.CELL_SIZE * 4.7, grid.CELL_SIZE * 1.5, "resources/gameover2.png");
 
 
 
@@ -107,11 +108,10 @@ public class Game {
 
 
         }
-        gameOver1.draw();
-        gameOver2.draw();
+        //gameOver1.draw();
+        gameOverlogo.draw();
         System.out.println("Game Over");
         System.out.println("Your Score: " + factory.getBlockCounter());
-
 
 
     }
@@ -155,14 +155,21 @@ public class Game {
         return running;
     }
 
-    private void levelUp(int score){
+    private void levelUp(int score) throws InterruptedException {
 
 
-        if(score == blockToLvUp) {
+        if(score == blockToLvUp ) {
             System.out.println("You are in level " + level);
             level++;
-            delay -= 3;
-            blockToLvUp += 3;
+            delay -= 2;
+            blockToLvUp += 5;
+            if(blockToLvUp > 6) {
+                levelUpPicture.draw();
+                Thread.sleep(900);
+                levelUpPicture.delete();
+            }
+
+
         }
 
     }
