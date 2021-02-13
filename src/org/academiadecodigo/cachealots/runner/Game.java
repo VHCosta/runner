@@ -162,10 +162,10 @@ public class Game {
             System.out.println("You are in level " + level);
             level++;
             delay -= 2;
-            blockToLvUp += 5;
-            if(blockToLvUp > 6) {
+            blockToLvUp += 7;
+            if(blockToLvUp > 8) {
                 levelUpPicture.draw();
-                Thread.sleep(900);
+                Thread.sleep(700);
                 levelUpPicture.delete();
             }
 
@@ -177,5 +177,3 @@ public class Game {
 
 
 }
-
-
