@@ -1,5 +1,6 @@
 package org.academiadecodigo.cachealots.runner;
 
+import org.academiadecodigo.bootcamp.Sound;
 import org.academiadecodigo.cachealots.runner.character.Character;
 import org.academiadecodigo.cachealots.runner.character.CharacterType;
 import org.academiadecodigo.cachealots.runner.blocks.Block;
@@ -43,6 +44,8 @@ public class Game {
 
     private Picture levelUpPicture;
     private Picture gameOverlogo;
+    Sound whatIsLoveMusic = new Sound("/resources/what is love.wav");
+    Sound funkNaruto = new Sound("/resources/Sadness.wav");
 
     public void initTools() {
 
@@ -91,6 +94,7 @@ public class Game {
         init();
         cloudBackground.show();
         ground.drawGround();
+        whatIsLoveMusic.play(true);
 
         while (true) {
 
@@ -124,10 +128,15 @@ public class Game {
             if (running) {
                 if (230 < character.getSprite().getY()) character.setSingleJump(true);
                 moveAll();
+
+
+
             } else break;
         }
         //gameOver1.draw();
         gameOverlogo.draw();
+        whatIsLoveMusic.stop();
+        funkNaruto.play(true);
 
         System.out.println("Game Over");
         System.out.println("Your Score: " + blockFactory.getBlockCounter());
