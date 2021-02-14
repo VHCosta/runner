@@ -9,6 +9,8 @@ import org.academiadecodigo.simplegraphics.pictures.Picture;
 public class Character {
 
     private Picture sprite;
+    private String[] spriteFrames;
+    private int frameIndex;
     private Grid grid;
 
     private CharacterType characterType;
@@ -32,8 +34,22 @@ public class Character {
         movement = new Movement(grid, this);
         currentDirection = Direction.NONE;
 
-        initSprite();
+
+        spriteFrames = new String[]{
+                "resources/mario/mario01.png",
+                "resources/mario/mario02.png",
+                "resources/mario/mario03.png",
+                "resources/mario/mario04.png",
+                "resources/mario/mario05.png",
+                "resources/mario/mario06.png",
+                "resources/mario/mario07.png",
+                "resources/mario/mario08.png",
+        };
+
+        sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), FLOOR_HEIGHT, spriteFrames[frameIndex]);
+        sprite.draw();
         initialPos = sprite.getY();
+
     }
 
 
@@ -61,7 +77,7 @@ public class Character {
     }
 
     public void initSprite(){
-        sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), FLOOR_HEIGHT, characterType.getSource());
+        sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), FLOOR_HEIGHT, spriteFrames[frameIndex]);
     }
 
     public Movement getMovement() {
@@ -70,6 +86,16 @@ public class Character {
 
     public Picture getSprite() {
         return sprite;
+    }
+
+    public void update(){
+
+
+        if (frameIndex == spriteFrames.length-1) frameIndex = 0;
+
+        sprite.load(spriteFrames[frameIndex]);
+        frameIndex++;
+
     }
 
     public void deleteSprite(){

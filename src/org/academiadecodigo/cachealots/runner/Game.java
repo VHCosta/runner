@@ -59,7 +59,7 @@ public class Game {
     private Picture gameOverLogo;
 
     private Sound whatIsLoveMusic = new Sound("/resources/what is love.wav");
-    private Sound funkNaruto = new Sound("/resources/sadness.wav");
+    private Sound funkNaruto = new Sound("/resources/Sadness.wav");
 
     public void initTools() {
 
@@ -132,6 +132,7 @@ public class Game {
 
         cloudBackground.deleteSprite();
         ground.deleteSprite();
+        character.deleteSprite();
         menu.init();
         inMenu = true;
 
@@ -143,25 +144,15 @@ public class Game {
             try { Thread.sleep(delay); }
             catch (InterruptedException e) { e.printStackTrace(); }
 
-
-            if(inMenu) {
-                if (running) {
-                    cloudBackground.getSprite().draw();
-                    ground.getSprite().draw();
-                    levelHUD.draw();
-                    scoreHUD.draw();
-
-                    break;
-                }
-            }
-
-
             if(running){
 
                 timer++;
-                if (timer == 0) grid.changeBackground();
-                cloudBackground.getSprite().draw();
-                ground.getSprite().draw();
+                if (timer == 0) {
+                    grid.changeBackground();
+                    cloudBackground.getSprite().draw();
+                    ground.getSprite().draw();
+                    character.getSprite().draw();
+                }
 
                 levelHUD.setText("Level: " + level);
                 levelHUD.draw();
@@ -173,7 +164,7 @@ public class Game {
 
                 if (timer % 8 == 0) cloudBackground.update();
                 if (timer % 2 == 0) ground.update();
-                character.getSprite().draw();
+                if (timer % 3 == 0) character.update();
 
                 double x = (Math.ceil(Math.random() * 4)) * 45;
                 if (timer % x == 0) blockFactory.create();
