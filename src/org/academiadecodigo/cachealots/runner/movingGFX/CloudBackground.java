@@ -49,9 +49,6 @@ public class CloudBackground {  // class with the characteristics of the running
                 "resources/clouds/cloudbg025.png",
                 "resources/clouds/cloudbg026.png"
         };
-
-
-
     }
 
     public void initSprite(){
@@ -73,7 +70,7 @@ public class CloudBackground {  // class with the characteristics of the running
         return sprite;
     }
 
-    public void resetSprite(){
+    public void deleteSprite(){
         sprite.delete();
     }
 

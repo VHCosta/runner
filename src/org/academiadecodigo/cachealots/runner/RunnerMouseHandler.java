@@ -18,12 +18,14 @@ public class RunnerMouseHandler implements MouseHandler {
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        for(int j=menu.startBox.getX();j<menu.startBox.getWidth();j++) {
-            for (int i = menu.startBox.getX(); i < menu.startBox.getWidth(); i++) {
-                if (!game.isRunning() && i == mouseEvent.getX() && j == mouseEvent.getY()) {
-                    game.setRunning(true);
-                    game.setInMenu(false);
-                    game.hideMenu();
+        if(game.isInMenu()) {
+            for (int j = menu.startBox.getX(); j < menu.startBox.getWidth(); j++) {
+                for (int i = menu.startBox.getX(); i < menu.startBox.getWidth(); i++) {
+                    if (i == mouseEvent.getX() && j == mouseEvent.getY()) {
+                        game.setRunning(true);
+                        game.setInMenu(false);
+                        game.hideMenu();
+                    }
                 }
             }
         }

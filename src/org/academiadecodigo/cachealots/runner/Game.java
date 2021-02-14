@@ -23,12 +23,12 @@ import java.util.Iterator;
 public class Game {
 
     private Grid grid;
+    private Menu menu;
     private static int timer = -1;
     private static int delay = 30;
     private static int level = 0;
     private static int blockToLvUp = 0;
 
-    private Menu menu;
     private boolean running;
     private boolean inMenu;
     private boolean gameOver;
@@ -36,13 +36,10 @@ public class Game {
 
     public Character character;
 
-
-
     private Keyboard keyboard;
     private RunnerKeyboardHandler keyboardHandler;
     private Mouse mouse;
     private RunnerMouseHandler mouseHandler;
-
 
     private Rectangle rectangleHideLeft;
     private Movement movement;
@@ -50,11 +47,11 @@ public class Game {
 
     private CloudBackground cloudBackground;
 
-    private CloudFactory cloudFactory;
     private BlockFactory blockFactory;
 
     private Text levelHUD;
     private Text scoreHUD;
+    private Text tryAgain;
 
     private Picture levelUpPicture;
     private Picture gameOverLogo;
@@ -67,15 +64,9 @@ public class Game {
         grid = new Grid();
         menu = new Menu(grid);
 
-        rectangleHideLeft = new Rectangle(0,0,grid.PADDING, grid.getHeight()+ grid.PADDING);
-        rectangleHideLeft.setColor(Color.WHITE);
-
-        character = new Character(CharacterType.MARIO, grid);
         grid.init();
 
-        movement = new Movement(grid, character);
         keyboardHandler = new RunnerKeyboardHandler(grid,this);
-        keyboardHandler.setMovement(movement);
         keyboard = new Keyboard(keyboardHandler);
         keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
 
@@ -87,11 +78,12 @@ public class Game {
 
     public void initGFX() {
 
-        character = new Character(CharacterType.MARIO, grid);
-
         cloudBackground = new CloudBackground(grid);
-        blockFactory = new BlockFactory(grid);
         ground = new MovingGround(grid);
+        blockFactory = new BlockFactory(grid);
+
+        character = new Character(CharacterType.MARIO, grid);
+        movement = new Movement(grid, character);
 
         rectangleHideLeft = new Rectangle(0, 0, grid.PADDING, grid.getHeight() + grid.PADDING);
         rectangleHideLeft.setColor(Color.WHITE);
@@ -128,16 +120,9 @@ public class Game {
 
         initTools();
         initGFX();
-        cloudBackground.show();
-        ground.show();
+
         menu.init();
         inMenu = true;
-
-        while (true) {
-            if (running){
-                break;
-            }
-        }
 
         whatIsLoveMusic.play(true);
 
@@ -146,12 +131,10 @@ public class Game {
 
         while (true) {
 
-            //Game Clock for all movements
-            try {
-                Thread.sleep(delay);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            try { Thread.sleep(delay); }
+            catch (InterruptedException e) { e.printStackTrace(); }
+
+            if(inMenu) { if (running) break; }
 
             if(running){
 
@@ -163,15 +146,16 @@ public class Game {
                 scoreHUD.setText("Score: " + blockFactory.getBlockCounter());
                 scoreHUD.draw();
 
+                if (timer % 8 == 0) cloudBackground.show();
+                if (timer % 2 == 0) ground.show();
+                character.getSprite().draw();
+
                 double x = (Math.ceil(Math.random() * 4)) * 45;
                 if (timer % x == 0) blockFactory.create();
 
-                if (timer % 8 == 0) cloudBackground.show();
-                if (timer % 2 == 0) ground.show();
                 if (timer % 3 == 0) collisionDetector();
                 if (230 < character.getSprite().getY()) character.setSingleJump(true);
 
-                character.getSprite().draw();
                 rectangleHideLeft.fill();
 
                 blockFactory.removeOffscreenBlocks();
@@ -180,10 +164,14 @@ public class Game {
 
                 moveAll();
 
-            } else {
+            }
 
-                gameOver = true;
+            if(gameOver) {
+
                 if(gameOverLogged) {
+                    tryAgain= new Text(0, 0, "Press SPACE to try again!");
+                    tryAgain.translate((double) grid.getWidth()/2 - (double) tryAgain.getWidth()/2, (double) grid.getHeight()/2 + (double) tryAgain.getHeight() * 2);
+                    tryAgain.draw();
                     gameOverLogo.draw();
                     whatIsLoveMusic.stop();
                     funkNaruto.play(true);
@@ -200,34 +188,29 @@ public class Game {
 
     public void reset() {
 
-        Iterator<Cloud> itClouds = cloudFactory.iterator();
-        while (itClouds.hasNext()) itClouds.next().getSprite().delete();
-        cloudFactory.clearCloudList();
-
         Iterator<Block> itBlocks = blockFactory.iterator();
         while (itBlocks.hasNext()) itBlocks.next().getSprite().delete();
+
         blockFactory.clearBlockList();
 
-        cloudBackground.resetSprite();
-        cloudBackground.initSprite();
-
-        ground.reset();
         gameOverLogo.delete();
-
-        character.getSprite().delete();
-        character.resetSprite();
+        tryAgain.delete();
         levelUpPicture.delete();
 
         levelHUD.delete();
         scoreHUD.delete();
 
+        ground.deleteSprite();
+        cloudBackground.deleteSprite();
+        character.deleteSprite();
 
         initGFX();
+
         running = true;
         funkNaruto.stop();
         whatIsLoveMusic.play(true);
 
-
+        gameOver = false;
         timer = -1;
         delay = 30;
         level= 0;
@@ -258,6 +241,7 @@ public class Game {
                             if (Xcharacter == Xblock && Ycharacter == Yblock) {
                                 gameOver = true;
                                 running = false;
+                                gameOverLogged = true;
                             }
                         }
                     }
@@ -276,7 +260,6 @@ public class Game {
 
             if(blockToLvUp > 8) {
                 levelUpPicture.draw();
-                //showingLevelUpSprite = true;
                 try {
                     Thread.sleep(300);
                 } catch (InterruptedException e) {

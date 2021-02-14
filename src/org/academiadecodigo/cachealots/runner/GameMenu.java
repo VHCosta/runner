@@ -48,7 +48,6 @@ public class GameMenu extends Game{
         character = new Character(CharacterType.MARIO, grid);
         movement = new Movement(grid, character);
         handler = new RunnerKeyboardHandler(grid, (Game) this);
-        handler.setMovement(movement);
         keyboard = new Keyboard(handler);
         keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
         mouse.addEventListener(MouseEventType.MOUSE_CLICKED);
