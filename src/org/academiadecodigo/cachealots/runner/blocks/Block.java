@@ -19,23 +19,24 @@ public class Block {  // class with the characteristics of the running blocks
     public Block(Grid grid) {
         this.grid = grid;
         movement = new Movement(grid, this);
+
         sprite = new Picture(grid.getWidth() - 20, (grid.getHeight() - (2.75 * grid.getCellSize())) + grid.getY(), "resources/thwomp40.png");
 
         String[] sprites = {
                 "resources/thwomp40.png",
-                "resources/",
-                "resources/",
-                "resources/",
-                "resources/"
+                "resources/Rocket.png",
+                "resources/scaryThwomp.png",
+                "resources/surprisedThwomp.png",
+                "resources/alexio.png"
         };
-        //int randomColor = (int) (Math.random() * colors.length);
-        //obstacle.setColor(colors[randomColor]);
+        int randomObstacles = (int) (Math.random() * sprites.length);
+        sprite.load(sprites[randomObstacles]);
+
         show();
 
     }
 
     public void show(){
-        //obstacle.fill();
         sprite.draw();
         onScreen = true;
 

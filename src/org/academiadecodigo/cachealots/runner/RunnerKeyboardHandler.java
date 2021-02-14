@@ -10,46 +10,38 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
 
     private Grid grid;
     private Movement movement;
-    private Character character;
     private Game game;
 
 
-    public RunnerKeyboardHandler(Grid grid, Character character, Game game){
+    public RunnerKeyboardHandler(Grid grid, Game game){
         this.grid = grid;
-        this.character = character;
         this.game = game;
     }
 
-    public void setMovement(Movement movement) {
-        this.movement = movement;
-    }
 
     @Override
     public void keyPressed(KeyboardEvent keyboardEvent) {
+
         switch (keyboardEvent.getKey()) {
-            case KeyboardEvent.KEY_RIGHT:
-                movement.moveRight(3);
-                break;
-            case KeyboardEvent.KEY_LEFT:
-                movement.moveLeft(3);
-                break;
-            case KeyboardEvent.KEY_UP:
-                movement.moveUp(1);
-                break;
-            case KeyboardEvent.KEY_DOWN:
-                movement.moveDown(1);
-                break;
+
+
+
+
             case KeyboardEvent.KEY_SPACE:
-                if(game.isRunning()){
-                    game.character.setJumping(true);
-                } else {
-                    try {
-                        game.init();
-                        game.start();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                if(game.isInMenu()){
+                    game.setRunning(true);
+                    game.setInMenu(false);
+                    game.hideMenu();
+
+
+                    break;
                 }
+
+                if(game.isGameOver()){
+                    game.reset();
+                    break;
+                }
+                if(game.isRunning()) game.character.setJumping(true);
                 break;
         }
     }

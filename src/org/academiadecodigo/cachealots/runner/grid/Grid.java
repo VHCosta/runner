@@ -19,30 +19,17 @@ public class Grid {
 
     //-- Properties
 
-    private int cols;
-    private int rows;
     private Rectangle outline;
-    private Rectangle sky;
-
-
-
-
-
-    //temp image for background
     private Picture background;
 
-
     //Behavior
-
     //-- Constructor
 
     public Grid(){
-        background = new Picture(PADDING, PADDING, "resources/backGround.png");
-        sky = new Rectangle(PADDING, PADDING, background.getWidth(), background.getHeight());
+        background = new Picture(PADDING, PADDING, "resources/back.jpg");
         outline = new Rectangle(PADDING, PADDING, background.getWidth(), background.getHeight());
-
+        outline.setColor(Color.LIGHT_GRAY);
     }
-
 
     //-- Main game methods
 
@@ -50,12 +37,6 @@ public class Grid {
     public void init(){
         background.draw();
         outline.draw();
-
-        sky.setColor(Color.CYAN);
-        //sky.fill();
-
-
-
     }
 
 

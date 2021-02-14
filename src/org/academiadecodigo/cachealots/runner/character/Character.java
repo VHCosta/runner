@@ -10,12 +10,13 @@ public class Character {
 
     private Picture sprite;
     private Grid grid;
-    private boolean jumping;
-    private boolean singleJump;
 
     private CharacterType characterType;
     private Movement movement;
     private Direction currentDirection;
+
+    private boolean jumping;
+    private boolean singleJump = true;
 
     private int initialPos;
 
@@ -31,24 +32,21 @@ public class Character {
         movement = new Movement(grid, this);
         currentDirection = Direction.NONE;
 
-        sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), FLOOR_HEIGHT, characterType.getSource());
+        initSprite();
         initialPos = sprite.getY();
     }
 
 
     public void moveFlow(){
+
         if(singleJump) {
             if (jumping) {
                 currentDirection = Direction.UP;
-                System.out.println("far 1");
             }
             if (sprite.getY() <= JUMP_HEIGHT) {
-                System.out.println("far 2");
                 if (sprite.getY() == FLOOR_HEIGHT) {
-                    System.out.println("far 3");
                     currentDirection = Direction.NONE;
                 } else {
-                    System.out.println("far 4");
                     currentDirection = Direction.DOWN;
                     jumping = false;
                     singleJump = false;
@@ -58,18 +56,13 @@ public class Character {
         movement.move(currentDirection);
     }
 
-    public void setSingleJump(boolean singleJump) {
-        this.singleJump = singleJump;
-    }
-
-    public boolean isJumping() {
-        return jumping;
-    }
-
     public void setJumping(boolean jumping) {
         this.jumping = jumping;
     }
 
+    public void initSprite(){
+        sprite = new Picture((3 * grid.getCellSize()) + grid.getPadding(), FLOOR_HEIGHT, characterType.getSource());
+    }
 
     public Movement getMovement() {
         return movement;
@@ -79,7 +72,15 @@ public class Character {
         return sprite;
     }
 
+    public void deleteSprite(){
+        sprite.delete();
+    }
+
     public int getInitialPos() {
         return initialPos;
+    }
+
+    public void setSingleJump(boolean b) {
+        singleJump = b;
     }
 }
