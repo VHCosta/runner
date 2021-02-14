@@ -19,7 +19,6 @@ public class Block {  // class with the characteristics of the running blocks
     public Block(Grid grid) {
         this.grid = grid;
         movement = new Movement(grid, this);
-        //obstacle = new Rectangle(grid.getWidth() - 20, (grid.getHeight() - (2.5 * grid.getCellSize())) + grid.getY(), grid.getCellSize(), grid.getCellSize());
 
         sprite = new Picture(grid.getWidth() - 20, (grid.getHeight() - (2.75 * grid.getCellSize())) + grid.getY(), "resources/thwomp40.png");
 

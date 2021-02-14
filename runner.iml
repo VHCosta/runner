@@ -11,5 +11,7 @@
     <orderEntry type="library" name="simplegraphics" level="project" />
     <orderEntry type="library" name="simplegraphics" level="project" />
     <orderEntry type="library" name="simplegraphics" level="project" />
+    <orderEntry type="library" name="sound" level="project" />
+    <orderEntry type="library" name="sound" level="project" />
   </component>
 </module>
