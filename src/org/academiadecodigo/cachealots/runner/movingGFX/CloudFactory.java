@@ -17,7 +17,7 @@ public class CloudFactory {
     }
 
     public void create(){
-        cloudList.add(new Cloud(Game.grid));
+       // cloudList.add(new Cloud(Game.grid));
     }
 
     public boolean hasNext(){

@@ -39,15 +39,19 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
                 break;
 
             case KeyboardEvent.KEY_SPACE:
-                if (!game.isRunning()) {
-                    try {
-                        game.reset();
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    game.character.setJumping(true);
+                if(game.isInMenu()){
+                    game.setRunning(true);
+                    game.setInMenu(false);
+                    game.hideMenu();
+
+                    break;
                 }
+
+                if(game.isGameOver()){
+                    game.reset();
+                    break;
+                }
+                if(game.isRunning()) game.character.setJumping(true);
                 break;
         }
     }

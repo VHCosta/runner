@@ -51,7 +51,6 @@ public class CloudBackground {  // class with the characteristics of the running
         };
 
 
-        show();
 
     }
 

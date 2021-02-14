@@ -1,6 +1,7 @@
 package org.academiadecodigo.cachealots.runner.blocks;
 
 import org.academiadecodigo.cachealots.runner.Game;
+import org.academiadecodigo.cachealots.runner.grid.Grid;
 
 import java.util.AbstractSequentialList;
 import java.util.Iterator;
@@ -12,12 +13,18 @@ public class BlockFactory {
     private AbstractSequentialList<Block> blockList = new LinkedList<>();
     public int blockCounter=0;
 
+    private Grid grid;
+
+    public BlockFactory(Grid grid) {
+        this.grid = grid;
+    }
+
     public void clearBlockList(){
         blockList.clear();
     }
 
     public void create(){
-        blockList.add(new Block(Game.grid));
+        blockList.add(new Block(grid));
     }
 
 

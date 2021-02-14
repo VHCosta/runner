@@ -14,28 +14,35 @@ import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
+import org.academiadecodigo.simplegraphics.mouse.Mouse;
+import org.academiadecodigo.simplegraphics.mouse.MouseEventType;
 import org.academiadecodigo.simplegraphics.pictures.Picture;
 
 import java.util.Iterator;
 
 public class Game {
 
-    public static Grid grid;
-    public static int timer = -1;
-    public static int delay = 30;
-    public static int level = 0;
-    public static int blockToLvUp = 0;
+    private Grid grid;
+    private static int timer = -1;
+    private static int delay = 30;
+    private static int level = 0;
+    private static int blockToLvUp = 0;
 
-    private int levelUpFrames;
-
+    private Menu menu;
     private boolean running;
+    private boolean inMenu;
     private boolean gameOver;
+    private boolean gameOverLogged;
 
-    private boolean showingLevelUpSprite;
     public Character character;
 
+
+
     private Keyboard keyboard;
-    private RunnerKeyboardHandler handler;
+    private RunnerKeyboardHandler keyboardHandler;
+    private Mouse mouse;
+    private RunnerMouseHandler mouseHandler;
+
 
     private Rectangle rectangleHideLeft;
     private Movement movement;
@@ -49,7 +56,6 @@ public class Game {
     private Text levelHUD;
     private Text scoreHUD;
 
-
     private Picture levelUpPicture;
     private Picture gameOverLogo;
 
@@ -59,6 +65,7 @@ public class Game {
     public void initTools() {
 
         grid = new Grid();
+        menu = new Menu(grid);
 
         rectangleHideLeft = new Rectangle(0,0,grid.PADDING, grid.getHeight()+ grid.PADDING);
         rectangleHideLeft.setColor(Color.WHITE);
@@ -67,20 +74,23 @@ public class Game {
         grid.init();
 
         movement = new Movement(grid, character);
-        handler = new RunnerKeyboardHandler(grid,this);
-        handler.setMovement(movement);
-        keyboard = new Keyboard(handler);
+        keyboardHandler = new RunnerKeyboardHandler(grid,this);
+        keyboardHandler.setMovement(movement);
+        keyboard = new Keyboard(keyboardHandler);
         keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
+
+        mouseHandler = new RunnerMouseHandler(menu, this);
+        mouse = new Mouse(mouseHandler);
+        mouse.addEventListener(MouseEventType.MOUSE_CLICKED);
 
     }
 
-    public void init() {
+    public void initGFX() {
 
         character = new Character(CharacterType.MARIO, grid);
 
         cloudBackground = new CloudBackground(grid);
-        cloudFactory = new CloudFactory();
-        blockFactory = new BlockFactory();
+        blockFactory = new BlockFactory(grid);
         ground = new MovingGround(grid);
 
         rectangleHideLeft = new Rectangle(0, 0, grid.PADDING, grid.getHeight() + grid.PADDING);
@@ -92,20 +102,49 @@ public class Game {
         levelHUD = new Text(grid.CELL_SIZE, grid.CELL_SIZE, "");
         scoreHUD = new Text(grid.CELL_SIZE, grid.CELL_SIZE * 2, "");
 
-
-
     }
 
     public boolean isRunning() {
         return running;
     }
 
+    public void setRunning(boolean running) {
+        this.running = running;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
+    }
+
+    public void setGameOver(boolean gameOver) {
+        this.gameOver = gameOver;
+    }
+
+    public void hideMenu() {
+        menu.hideStart();
+    }
+
     public void start() throws InterruptedException {
-        running = true;
+
         initTools();
-        init();
+        initGFX();
         cloudBackground.show();
-        ground.drawGround();
+        ground.show();
+        menu.init();
+
+        while (inMenu) {
+            if (running){
+                run();
+                break;
+            }
+        }
+    }
+
+    public void run() {
+
+        cloudBackground.show();
+        ground.show();
+
         whatIsLoveMusic.play(true);
 
         levelHUD.draw();
@@ -114,7 +153,11 @@ public class Game {
         while (true) {
 
             //Game Clock for all movements
-            Thread.sleep(delay);
+            try {
+                Thread.sleep(delay);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             if(running){
 
@@ -130,7 +173,7 @@ public class Game {
                 if (timer % x == 0) blockFactory.create();
 
                 if (timer % 8 == 0) cloudBackground.show();
-                if (timer % 2 == 0) ground.drawGround();
+                if (timer % 2 == 0) ground.show();
                 if (timer % 3 == 0) collisionDetector();
                 if (230 < character.getSprite().getY()) character.setSingleJump(true);
 
@@ -145,13 +188,14 @@ public class Game {
 
             } else {
 
-                if(gameOver) {
+                gameOver = true;
+                if(gameOverLogged) {
                     gameOverLogo.draw();
                     whatIsLoveMusic.stop();
                     funkNaruto.play(true);
                     System.out.println("Game Over");
                     System.out.println("Your Score: " + blockFactory.getBlockCounter());
-                    gameOver = false;
+                    gameOverLogged = false;
                 }
 
             }
@@ -160,12 +204,11 @@ public class Game {
 
     }
 
-    public void reset() throws InterruptedException {
+    public void reset() {
 
         Iterator<Cloud> itClouds = cloudFactory.iterator();
         while (itClouds.hasNext()) itClouds.next().getSprite().delete();
         cloudFactory.clearCloudList();
-
 
         Iterator<Block> itBlocks = blockFactory.iterator();
         while (itBlocks.hasNext()) itBlocks.next().getSprite().delete();
@@ -185,7 +228,7 @@ public class Game {
         scoreHUD.delete();
 
 
-        init();
+        initGFX();
         running = true;
         funkNaruto.stop();
         whatIsLoveMusic.play(true);
@@ -229,7 +272,7 @@ public class Game {
         }
     }
 
-    private void levelUp(int score) throws InterruptedException {
+    private void levelUp(int score) {
 
         if(score == blockToLvUp ) {
             System.out.println("You are in level " + level);
@@ -237,27 +280,24 @@ public class Game {
             delay -= 2;
             blockToLvUp += 7;
 
-
-            /*
-            if(showingLevelUpSprite){
-                levelUpFrames++;
-                if(levelUpFrames == 10){
-                    levelUpPicture.delete();
-                    showingLevelUpSprite = false;
-                }
-                return;
-
-            }*/
             if(blockToLvUp > 8) {
                 levelUpPicture.draw();
                 //showingLevelUpSprite = true;
-                Thread.sleep(300);
+                try {
+                    Thread.sleep(300);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
                 levelUpPicture.delete();
             }
-
-
         }
     }
 
+    public boolean isInMenu() {
+        return inMenu;
+    }
 
+    public void setInMenu(boolean inMenu) {
+        this.inMenu = inMenu;
+    }
 }

@@ -7,8 +7,8 @@ public class GameExecutable {
     public static void main(String[] args) throws InterruptedException {
 
         Game runner = new Game();
-        runner.start();
 
+        runner.start();
 
 
 

@@ -31,7 +31,7 @@ public class MovingGround {
     }
 
 
-    public void drawGround() throws InterruptedException {
+    public void show() {
 
         if (frameCounter == 3) frameCounter = 0;
 
