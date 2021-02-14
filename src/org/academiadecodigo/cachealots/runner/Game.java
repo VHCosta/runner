@@ -124,26 +124,20 @@ public class Game {
         menu.hideStart();
     }
 
-    public void start() throws InterruptedException {
+    public void start() {
 
         initTools();
         initGFX();
         cloudBackground.show();
         ground.show();
         menu.init();
+        inMenu = true;
 
-        while (inMenu) {
+        while (true) {
             if (running){
-                run();
                 break;
             }
         }
-    }
-
-    public void run() {
-
-        cloudBackground.show();
-        ground.show();
 
         whatIsLoveMusic.play(true);
 

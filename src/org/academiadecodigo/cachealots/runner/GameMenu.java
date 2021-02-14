@@ -59,7 +59,7 @@ public class GameMenu extends Game{
      */
     }
 
-    public void start() throws InterruptedException {
+    public void start() {
 
         init();
         if(counterstart%2==0){
@@ -72,7 +72,11 @@ public class GameMenu extends Game{
 
         while(true) {
             //Game Clock for all movements
-            Thread.sleep(30);
+            try {
+                Thread.sleep(30);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
             timer++;
 
@@ -93,7 +97,11 @@ public class GameMenu extends Game{
             //Move all
 
             if(timer % 3 == 0) {
-                collisionDetector();
+                try {
+                    collisionDetector();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
 
             if(running){
