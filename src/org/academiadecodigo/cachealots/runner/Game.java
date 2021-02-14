@@ -10,6 +10,7 @@ import org.academiadecodigo.cachealots.runner.grid.Movement;
 import org.academiadecodigo.cachealots.runner.movingGFX.*;
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
+import org.academiadecodigo.simplegraphics.graphics.Text;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
@@ -22,12 +23,15 @@ public class Game {
     public static Grid grid;
     public static int timer = -1;
     public static int delay = 30;
-    public static int score = 0;
-    public static int level= 1;
+    public static int level = 0;
     public static int blockToLvUp = 0;
+
+    private int levelUpFrames;
 
     private boolean running;
     private boolean gameOver;
+
+    private boolean showingLevelUpSprite;
     public Character character;
 
     private Keyboard keyboard;
@@ -42,17 +46,19 @@ public class Game {
     private CloudFactory cloudFactory;
     private BlockFactory blockFactory;
 
+    private Text levelHUD;
+    private Text scoreHUD;
+
 
     private Picture levelUpPicture;
-    private Picture gameOverlogo;
+    private Picture gameOverLogo;
+
     private Sound whatIsLoveMusic = new Sound("/resources/what is love.wav");
     private Sound funkNaruto = new Sound("/resources/Sadness.wav");
 
     public void initTools() {
 
         grid = new Grid();
-
-        BlockFactory factory = new BlockFactory();
 
         rectangleHideLeft = new Rectangle(0,0,grid.PADDING, grid.getHeight()+ grid.PADDING);
         rectangleHideLeft.setColor(Color.WHITE);
@@ -80,8 +86,13 @@ public class Game {
         rectangleHideLeft = new Rectangle(0, 0, grid.PADDING, grid.getHeight() + grid.PADDING);
         rectangleHideLeft.setColor(Color.WHITE);
 
-        gameOverlogo= new Picture(grid.CELL_SIZE * 4.7, grid.CELL_SIZE * 1.5, "resources/gameover2.png");
+        gameOverLogo = new Picture(grid.CELL_SIZE * 4.7, grid.CELL_SIZE * 1.5, "resources/gameover2.png");
         levelUpPicture = new Picture(grid.CELL_SIZE * 11, grid.CELL_SIZE * 2, "resources/pikachu-meme.png");
+
+        levelHUD = new Text(grid.CELL_SIZE, grid.CELL_SIZE, "");
+        scoreHUD = new Text(grid.CELL_SIZE, grid.CELL_SIZE * 2, "");
+
+
 
     }
 
@@ -97,6 +108,9 @@ public class Game {
         ground.drawGround();
         whatIsLoveMusic.play(true);
 
+        levelHUD.draw();
+        scoreHUD.draw();
+
         while (true) {
 
             //Game Clock for all movements
@@ -105,6 +119,12 @@ public class Game {
             if(running){
 
                 timer++;
+
+                levelHUD.setText("Level: " + level);
+                levelHUD.draw();
+
+                scoreHUD.setText("Score: " + blockFactory.getBlockCounter());
+                scoreHUD.draw();
 
                 double x = (Math.ceil(Math.random() * 4)) * 45;
                 if (timer % x == 0) blockFactory.create();
@@ -126,7 +146,7 @@ public class Game {
             } else {
 
                 if(gameOver) {
-                    gameOverlogo.draw();
+                    gameOverLogo.draw();
                     whatIsLoveMusic.stop();
                     funkNaruto.play(true);
                     System.out.println("Game Over");
@@ -155,15 +175,21 @@ public class Game {
         cloudBackground.initSprite();
 
         ground.reset();
-        gameOverlogo.delete();
+        gameOverLogo.delete();
 
         character.getSprite().delete();
         character.resetSprite();
+        levelUpPicture.delete();
 
         init();
         running = true;
         funkNaruto.stop();
         whatIsLoveMusic.play(true);
+
+        timer = -1;
+        delay = 30;
+        level= 1;
+        blockToLvUp = 0;
 
     }
 
@@ -205,11 +231,26 @@ public class Game {
             level++;
             delay -= 2;
             blockToLvUp += 7;
+
+
+            /*
+            if(showingLevelUpSprite){
+                levelUpFrames++;
+                if(levelUpFrames == 10){
+                    levelUpPicture.delete();
+                    showingLevelUpSprite = false;
+                }
+                return;
+
+            }*/
             if(blockToLvUp > 8) {
                 levelUpPicture.draw();
-                Thread.sleep(700);
+                //showingLevelUpSprite = true;
+                Thread.sleep(300);
                 levelUpPicture.delete();
             }
+
+
         }
     }
 
