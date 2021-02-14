@@ -181,14 +181,19 @@ public class Game {
         character.resetSprite();
         levelUpPicture.delete();
 
+        levelHUD.delete();
+        scoreHUD.delete();
+
+
         init();
         running = true;
         funkNaruto.stop();
         whatIsLoveMusic.play(true);
 
+
         timer = -1;
         delay = 30;
-        level= 1;
+        level= 0;
         blockToLvUp = 0;
 
     }
