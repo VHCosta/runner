@@ -24,16 +24,11 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
 
         switch (keyboardEvent.getKey()) {
 
-
-
-
             case KeyboardEvent.KEY_SPACE:
                 if(game.isInMenu()){
                     game.setRunning(true);
                     game.setInMenu(false);
                     game.hideMenu();
-
-
                     break;
                 }
 
@@ -43,6 +38,16 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
                 }
                 if(game.isRunning()) game.character.setJumping(true);
                 break;
+
+            case KeyboardEvent.KEY_Q:
+                if(game.isGameOver() || game.isInMenu()){
+                    System.exit(0);
+                    break;
+                }
+                if(game.isRunning()) game.character.setJumping(true);
+
+
+
         }
     }
 

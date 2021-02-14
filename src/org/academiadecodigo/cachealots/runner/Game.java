@@ -52,12 +52,14 @@ public class Game {
     private Text levelHUD;
     private Text scoreHUD;
     private Text tryAgain;
+    private Text tryAgain2;
+
 
     private Picture levelUpPicture;
     private Picture gameOverLogo;
 
     private Sound whatIsLoveMusic = new Sound("/resources/what is love.wav");
-    private Sound funkNaruto = new Sound("/resources/Sadness.wav");
+    private Sound funkNaruto = new Sound("/resources/sadness.wav");
 
     public void initTools() {
 
@@ -69,6 +71,8 @@ public class Game {
         keyboardHandler = new RunnerKeyboardHandler(grid,this);
         keyboard = new Keyboard(keyboardHandler);
         keyboard.addEventListener(KeyboardEvent.KEY_SPACE, KeyboardEventType.KEY_PRESSED);
+        keyboard.addEventListener(KeyboardEvent.KEY_Q, KeyboardEventType.KEY_PRESSED);
+
 
         mouseHandler = new RunnerMouseHandler(menu, this);
         mouse = new Mouse(mouseHandler);
@@ -88,11 +92,16 @@ public class Game {
         rectangleHideLeft = new Rectangle(0, 0, grid.PADDING, grid.getHeight() + grid.PADDING);
         rectangleHideLeft.setColor(Color.WHITE);
 
-        gameOverLogo = new Picture(grid.CELL_SIZE * 4.7, grid.CELL_SIZE * 1.5, "resources/gameover2.png");
+        gameOverLogo = new Picture(0, 0, "resources/gameover2.png");
+        gameOverLogo.translate((double) (grid.getWidth()/2 - gameOverLogo.getWidth()/2), (double) (grid.getHeight()/3 - gameOverLogo.getHeight()/2));
+
         levelUpPicture = new Picture(grid.CELL_SIZE * 11, grid.CELL_SIZE * 2, "resources/pikachu-meme.png");
 
         levelHUD = new Text(grid.CELL_SIZE, grid.CELL_SIZE, "");
+        levelHUD.grow(10, 10  );
+
         scoreHUD = new Text(grid.CELL_SIZE, grid.CELL_SIZE * 2, "");
+        scoreHUD.grow(10, 10  );
 
     }
 
@@ -119,8 +128,8 @@ public class Game {
     public void start() {
 
         initTools();
-
         initGFX();
+
         cloudBackground.deleteSprite();
         ground.deleteSprite();
         menu.init();
@@ -139,7 +148,6 @@ public class Game {
                 if (running) {
                     cloudBackground.getSprite().draw();
                     ground.getSprite().draw();
-
                     levelHUD.draw();
                     scoreHUD.draw();
 
@@ -151,14 +159,17 @@ public class Game {
             if(running){
 
                 timer++;
+                if (timer == 0) grid.changeBackground();
                 cloudBackground.getSprite().draw();
                 ground.getSprite().draw();
 
                 levelHUD.setText("Level: " + level);
                 levelHUD.draw();
+                levelHUD.setColor(Color.WHITE);
 
                 scoreHUD.setText("Score: " + blockFactory.getBlockCounter());
                 scoreHUD.draw();
+                scoreHUD.setColor(Color.WHITE);
 
                 if (timer % 8 == 0) cloudBackground.update();
                 if (timer % 2 == 0) ground.update();
@@ -183,9 +194,19 @@ public class Game {
             if(gameOver) {
 
                 if(gameOverLogged) {
-                    tryAgain= new Text(0, 0, "Press SPACE to try again!");
+                    tryAgain = new Text(0, 0, "Press SPACE to try again!");
+                    tryAgain2 = new Text(0, 0, "Press Q to exit.");
+
+                    tryAgain.setColor(Color.WHITE);
+                    tryAgain2.setColor(Color.WHITE);
+
                     tryAgain.translate((double) grid.getWidth()/2 - (double) tryAgain.getWidth()/2, (double) grid.getHeight()/2 + (double) tryAgain.getHeight() * 2);
+                    tryAgain2.translate((double) grid.getWidth()/2 - (double) tryAgain2.getWidth()/2, (double) grid.getHeight()/2 + (double) tryAgain.getHeight() * 3);
+
                     tryAgain.draw();
+                    tryAgain2.draw();
+
+
                     gameOverLogo.draw();
                     whatIsLoveMusic.stop();
                     funkNaruto.play(true);
@@ -209,6 +230,7 @@ public class Game {
 
         gameOverLogo.delete();
         tryAgain.delete();
+        tryAgain2.delete();
         levelUpPicture.delete();
 
         levelHUD.delete();
@@ -267,18 +289,17 @@ public class Game {
     private void levelUp(int score) {
 
         if(score == blockToLvUp ) {
-            System.out.println("You are in level " + level);
+            //System.out.println("You are in level " + level);
             level++;
             delay -= 2;
             blockToLvUp += 7;
 
             if(blockToLvUp > 8) {
                 levelUpPicture.draw();
-                try {
-                    Thread.sleep(300);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+
+                try { Thread.sleep(300); }
+                catch (InterruptedException e) { e.printStackTrace(); }
+
                 levelUpPicture.delete();
             }
         }

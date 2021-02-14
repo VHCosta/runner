@@ -19,8 +19,12 @@ public class RunnerMouseHandler implements MouseHandler {
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
         if(game.isInMenu()) {
-            for (int j = menu.startBox.getX(); j < menu.startBox.getWidth(); j++) {
-                for (int i = menu.startBox.getX(); i < menu.startBox.getWidth(); i++) {
+            //System.out.println(menu.startBox.getY());
+            //System.out.println("bruh");
+            //System.out.println(menu.startBox.getY()+menu.startBox.getHeight());
+            //System.out.println(mouseEvent.getY());
+            for (int j = menu.startBox.getY() + 25; j < menu.startBox.getY() + 25 +menu.startBox.getHeight(); j++) {
+                for (int i = menu.startBox.getX(); i < menu.startBox.getX()+menu.startBox.getWidth(); i++) {
                     if (i == mouseEvent.getX() && j == mouseEvent.getY()) {
                         game.setRunning(true);
                         game.setInMenu(false);
@@ -28,7 +32,18 @@ public class RunnerMouseHandler implements MouseHandler {
                     }
                 }
             }
+
+            for (int j = menu.quitBox.getY() + 25; j < menu.quitBox.getY() + 25 +menu.quitBox.getHeight(); j++) {
+                for (int i = menu.quitBox.getX(); i < menu.quitBox.getX()+menu.quitBox.getWidth(); i++) {
+                    if (i == mouseEvent.getX() && j == mouseEvent.getY()) {
+                      System.exit(0);
+
+                    }
+                }
+            }
         }
+
+
 
         if(game.isGameOver()) game.reset();
         if(game.isRunning()) game.character.setJumping(true);

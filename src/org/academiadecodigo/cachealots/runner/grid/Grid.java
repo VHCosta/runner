@@ -8,8 +8,6 @@ public class Grid {
 
     //State
 
-
-
     //-- Constants
 
     public final int PADDING = 10;
@@ -26,7 +24,7 @@ public class Grid {
     //-- Constructor
 
     public Grid(){
-        background = new Picture(PADDING, PADDING, "resources/back.jpg");
+        background = new Picture(PADDING, PADDING*1.5, "resources/RunnerStart.png");
         outline = new Rectangle(PADDING, PADDING, background.getWidth(), background.getHeight());
         outline.setColor(Color.LIGHT_GRAY);
     }
@@ -36,9 +34,12 @@ public class Grid {
     //-- Initialize: show grid on the screen
     public void init(){
         background.draw();
-        outline.draw();
+        //outline.draw();
     }
 
+    public void changeBackground(){
+        background.load("resources/back.jpg");
+    }
 
     //-- Getters
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<project name="Runner" basedir="." default="">
+<project name="Runner" basedir="." default="jarfile">
 
     <target name="init" description="Initializes properties">
         <property name="project.name" value="Runner"/>
