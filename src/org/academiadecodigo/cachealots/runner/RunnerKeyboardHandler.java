@@ -33,6 +33,7 @@ public class RunnerKeyboardHandler implements KeyboardHandler {
                     game.setInMenu(false);
                     game.hideMenu();
 
+
                     break;
                 }
 

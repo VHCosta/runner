@@ -134,7 +134,16 @@ public class Game {
             try { Thread.sleep(delay); }
             catch (InterruptedException e) { e.printStackTrace(); }
 
-            if(inMenu) { if (running) break; }
+            if(inMenu) {
+                if (running) {
+
+                    cloudBackground.initSprite();
+                    ground.initSprite();
+
+                    break;
+                }
+            }
+
 
             if(running){
 
@@ -146,8 +155,8 @@ public class Game {
                 scoreHUD.setText("Score: " + blockFactory.getBlockCounter());
                 scoreHUD.draw();
 
-                if (timer % 8 == 0) cloudBackground.show();
-                if (timer % 2 == 0) ground.show();
+                if (timer % 8 == 0) cloudBackground.update();
+                if (timer % 2 == 0) ground.update();
                 character.getSprite().draw();
 
                 double x = (Math.ceil(Math.random() * 4)) * 45;

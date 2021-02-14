@@ -31,12 +31,11 @@ public class MovingGround {
     }
 
 
-    public void show() {
+    public void update() {
 
         if (frameCounter == 3) frameCounter = 0;
 
         tile1.load(frames[frameCounter]);
-        tile1.draw();
 
         frameCounter++;
 
@@ -48,5 +47,6 @@ public class MovingGround {
 
     public void initSprite(){
         tile1 = new Picture(grid.PADDING, grid.GROUND_Y, "resources/ground_frames/ground_frame1.png");
+        tile1.draw();
     }
 }
