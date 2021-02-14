@@ -40,6 +40,10 @@ public class MovingGround {
 
         frameCounter++;
 
+    }
 
+    public void reset(){
+        tile1.delete();
+        tile1 = new Picture(grid.PADDING, grid.GROUND_Y, "resources/ground_frames/ground_frame1.png");
     }
 }

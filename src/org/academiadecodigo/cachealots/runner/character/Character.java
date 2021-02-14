@@ -56,14 +56,6 @@ public class Character {
         movement.move(currentDirection);
     }
 
-    public boolean isSingleJump() {
-        return singleJump;
-    }
-
-    public boolean isJumping() {
-        return jumping;
-    }
-
     public void setJumping(boolean jumping) {
         this.jumping = jumping;
     }

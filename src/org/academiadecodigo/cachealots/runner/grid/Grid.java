@@ -26,7 +26,7 @@ public class Grid {
     //-- Constructor
 
     public Grid(){
-        background = new Picture(PADDING, PADDING, "resources/angryimg.png");
+        background = new Picture(PADDING, PADDING, "resources/RunnerGrid.png");
         outline = new Rectangle(PADDING, PADDING, background.getWidth(), background.getHeight());
         outline.setColor(Color.LIGHT_GRAY);
     }
