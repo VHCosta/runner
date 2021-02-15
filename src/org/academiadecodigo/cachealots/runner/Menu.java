@@ -21,15 +21,15 @@ public class Menu {
     public Menu(Grid grid) {
         this.grid = grid;
 
-        startBox.translate((double) grid.getWidth()/2 - grid.PADDING - (double) startBox.getWidth(), (double) grid.getHeight()/2 + (double) startBox.getHeight() * 0.75);
+        startBox.translate((double) grid.getWidth()/2 - grid.PADDING - (double) startBox.getWidth()-3, (double) grid.getHeight()/2 + (double) startBox.getHeight() * 0.75);
         quitBox.translate((double) grid.getWidth()/2 + grid.PADDING * 2, (double) grid.getHeight()/2 + (double) quitBox.getHeight() * 0.75);
         artv.translate(PADDING * 2, grid.getHeight() - artv.getHeight() - PADDING * 2);
 
-        pressSpaceToBegin = new Text(0, 0, "Press SPACE to begin! Or press Q to exit.");
+        pressSpaceToBegin = new Text(0, 0, "   Press SPACE to begin! Or press Q to exit.");
         pressSpaceToBegin.setColor(Color.WHITE);
         pressSpaceToBegin.translate((double) grid.getWidth()/2 - (double) pressSpaceToBegin.getWidth()/2, (double) grid.getHeight()/2 + (double) pressSpaceToBegin.getHeight() * 2);
 
-        instructions = new Text(0, 0, "INSTRUCTIONS | Press SPACE or click to jump!");
+        instructions = new Text(0, 0, "    INSTRUCTIONS | Press SPACE or click to jump!");
         instructions.setColor(Color.WHITE);
         instructions.translate((double) grid.getWidth()/2 - (double) instructions.getWidth()/2, (double) grid.getHeight() - instructions.getHeight());
 
