@@ -8,6 +8,6 @@ Made and idealized by:
 Arthur Britto\
 Raul Ribeiro\
 Thurian Campos\
-Vitor Hugo Costa\
+Vitor Hugo Costa
 
 kthksbye
