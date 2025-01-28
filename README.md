@@ -10,7 +10,14 @@ This masterpiece was made and idealized in February 2021 by:
 
 ___
 
+## Requirements
+
+Supports Windows, Linux and MacOS.\
+Requires Java version 21 or later installed on your machine. 
+
+
 ## How to execute
+
 
 ```console
 java -jar Runner.jar
