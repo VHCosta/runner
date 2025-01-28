@@ -1,13 +1,29 @@
 # Runner
-A side-scroller / endless runner type game made using SimpleGraphics Library
+A side-scroller / endless runner type game made using the SimpleGraphics library.
 
-This Master piece was\
-Made and idealized by:
+This masterpiece was made and idealized in February 2021 by:
 
+[Arthur Britto](https://github.com/arthurBritto)\
+[Raul Ribeiro](https://github.com/TobiasOT-Rex)\
+[Thurian Campos](https://github.com/thurian)\
+[Vitor Hugo Costa](https://github.com/VHCosta)
 
-Arthur Britto\
-Raul Ribeiro\
-Thurian Campos\
-Vitor Hugo Costa
+___
 
-kthksbye
+## How to execute
+
+```console
+java -jar Runner.jar
+```
+
+## Controls
+
+Click "Start" or press Spacebar to begin the game.\
+
+Spacebar/click to jump!
+
+Click "Quit" or press Q to quit (upon Game Over). 
+
+---
+
+_kthxbai~_
